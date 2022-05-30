@@ -8,6 +8,10 @@ module.exports = class Deliver extends Sequelize.Model {
           type: Sequelize.INTEGER,
           primaryKey: true,
         },
+        deliver_type:{
+          type:Sequelize.BOOLEAN,
+          allowNull:false,
+        },
         weight:{
           type:Sequelize.FLOAT,
           allowNull:false,
