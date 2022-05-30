@@ -17,10 +17,10 @@ module.exports = router;
 /**
  * @swagger
  * /cost/list:
- *   post:
- *     summary: show profits
- *     description: show profits located in query
- *     tags: [profit]
+ *   get:
+ *     summary: show costs
+ *     description: show costs located in query
+ *     tags: [cost]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -30,13 +30,13 @@ module.exports = router;
  *             schema:
  *               type: object
  *               required:
- *                 - startdate,enddate,profitcode
+ *                 - startdate,enddate,costcode
  *               properties:
  *                 startdate:
  *                   type: date
  *                 enddate:
  *                   type: date
-*                 profitcode:
+ *                 profitcode:
  *                   type: integer
  *               example:
  *                 startdate: 2022-01-01
@@ -57,41 +57,4 @@ module.exports = router;
  *         $ref: '#/components/responses/Forbidden'
  * 
  * 
- */
-
-/**
- * @swagger
- * /profit/new:
- *   delete:
- *     summary: unfollow
- *     description: 
- *     tags: [friend]
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *         required: true
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               required:
- *                 - friendId
- *               properties:
- *                 friendId:
- *                   type: string
- *               example:
- *                 friendId: 20c37r94-df80-4055-72628fc4njs338e
- *     responses:
- *       "200":
- *         description: Created
- *         content:
- *           application/json:
- *             schema:
- *                $ref: '#/components/schemas/Room'
- *       "400":
- *         $ref: '#/components/responses/DuplicateEmail'
- *       "401":
- *         $ref: '#/components/responses/Unauthorized'
- *       "403":
- *         $ref: '#/components/responses/Forbidden'
  */

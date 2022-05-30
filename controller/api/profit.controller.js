@@ -12,7 +12,7 @@ module.exports = router;
 /**
  * @swagger
  * /profit/list:
- *   post:
+ *   get:
  *     summary: show profits
  *     description: show profits located in query
  *     tags: [profit]
@@ -58,9 +58,9 @@ module.exports = router;
  * @swagger
  * /profit/new:
  *   delete:
- *     summary: unfollow
+ *     summary: update profit
  *     description: 
- *     tags: [friend]
+ *     tags: [profit]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
