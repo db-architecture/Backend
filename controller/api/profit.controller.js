@@ -25,7 +25,7 @@ module.exports = router;
  *             schema:
  *               type: object
  *               required:
- *                 - startdate,enddate,profitcode
+ *                 - startdate,enddate
  *               properties:
  *                 startdate:
  *                   type: date
@@ -34,8 +34,8 @@ module.exports = router;
 *                 profitcode:
  *                   type: integer
  *               example:
- *                 startdate: 2022-01-01
- *                 enddate: 2022-01-30
+ *                 startdate: "2022-01-01"
+ *                 enddate: "2022-01-30"
  *                 profitcode: 1
  *     responses:
  *       "200":
@@ -43,7 +43,21 @@ module.exports = router;
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Room'
+ *                type: object
+ *                properties:
+ *                  date:
+ *                      type: date
+ *                  loc:
+ *                      type:string
+ *                  profit:
+ *                      type:number
+ *                  methods:
+ *                      type:string
+ *                example:
+ *                  date: "2022-01-01"
+ *                  loc: 전농1동 25호점
+ *                  profit: 800000
+ *                  methods: 물건판매
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
@@ -57,7 +71,7 @@ module.exports = router;
 /**
  * @swagger
  * /profit/new:
- *   delete:
+ *   post:
  *     summary: update profit
  *     description: 
  *     tags: [profit]
@@ -69,20 +83,33 @@ module.exports = router;
  *           application/json:
  *             schema:
  *               type: object
- *               required:
- *                 - friendId
+ *               required: date,profit,profitcode
  *               properties:
- *                 friendId:
- *                   type: string
+ *                  date:
+ *                      type: date
+ *                  profit:
+ *                      type: number
+ *                  profitcode:
+ *                      type: number
  *               example:
- *                 friendId: 20c37r94-df80-4055-72628fc4njs338e
+ *                 date : "2022-01-05"
+ *                 profit : 50000
+ *                 profitcode : 1
  *     responses:
  *       "200":
  *         description: Created
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Room'
+ *               type: object
+ *               properties:
+ *                  code:
+ *                      type: number
+ *                  message:
+ *                      type: string
+ *               example:
+ *                 code: 200
+ *                 message: "success"
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":

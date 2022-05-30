@@ -15,7 +15,7 @@ components:
         email: fake@example.com
         user_name: fake name
 
-    Room:
+    List:
       type: object
       properties:
         id:

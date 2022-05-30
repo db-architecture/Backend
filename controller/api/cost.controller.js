@@ -30,25 +30,39 @@ module.exports = router;
  *             schema:
  *               type: object
  *               required:
- *                 - startdate,enddate,costcode
+ *                 - startdate,enddate
  *               properties:
  *                 startdate:
  *                   type: date
  *                 enddate:
  *                   type: date
- *                 profitcode:
+ *                 costcode:
  *                   type: integer
  *               example:
  *                 startdate: 2022-01-01
  *                 enddate: 2022-01-30
- *                 profitcode: 1
+ *                 costcode: 1
  *     responses:
  *       "200":
  *         description: Created
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Room'
+*                type: object
+ *                properties:
+ *                  date:
+ *                      type: date
+ *                  loc:
+ *                      type:string
+ *                  cost:
+ *                      type:number
+ *                  methods:
+ *                      type:string
+ *                example:
+ *                  date: "2022-01-01"
+ *                  loc: 전농1동 25호점
+ *                  cost: 800000
+ *                  methods: 발주
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
