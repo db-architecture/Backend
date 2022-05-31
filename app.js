@@ -4,8 +4,8 @@ const cors = require('cors');
 const cookieparser = require('cookie-parser');
 const apiroutes = require("./controller/api/");
 const docs = require("./controller/api/docs.controller")
-// const mySqlStore = require('express-mysql-session')(session);
-// const { sequelize } = require("./models");
+//const mySqlStore = require('express-mysql-session')(session);
+const { sequelize } = require("./models");
 
 const app = express();
 
@@ -28,7 +28,7 @@ app.use( cors({
 //     database: process.env.DB_DATABASE
 // };
 
-// const sessionStore = new mySqlStore(mySqlOption);
+//const sessionStore = new mySqlStore(mySqlOption);
 
 // sequelize.sync({ force: false })
 //   .then(() => {
@@ -37,6 +37,15 @@ app.use( cors({
 //   .catch((err) => {
 //     console.error(err);
 // });
+
+//DB sync
+sequelize.sync({ force: false })
+  .then(() => {
+    console.log('Successfully connected');
+  })
+  .catch((err) => {
+    console.error(err);
+});
 
 app.get("/",(req,res) => {
     //res.json({message:"hello"});

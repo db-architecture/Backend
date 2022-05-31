@@ -9,6 +9,7 @@ module.exports = class Branch extends Sequelize.Model {
           primaryKey: true,
         },
         branch_name:{
+          type: Sequelize.STRING(12),
           allowNull:false,
         },
         branch_address:{
@@ -16,15 +17,19 @@ module.exports = class Branch extends Sequelize.Model {
           allowNull:false,
         },
         business_num:{
+          type:Sequelize.STRING(10),
           allowNull:false,
         },
         owner:{
+          type: Sequelize.STRING(40),
           allowNull:false,
         },
         owner_num:{
+          type:Sequelize.STRING(12),
           allowNull:false,
         },
         month_fee:{
+          type:Sequelize.INTEGER,
           allowNull:true,
         },
     }, {
