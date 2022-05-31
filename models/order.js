@@ -6,6 +6,7 @@ module.exports = class Order extends Sequelize.Model {
       return super.init({
         order_id : {
             type: Sequelize.INTEGER,
+            autoIncrement: true,
             primaryKey: true,
         },
         order_num:{

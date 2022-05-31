@@ -14,7 +14,7 @@ module.exports = class Stock extends Sequelize.Model {
           defaultValue:Sequelize.literal('now()'),
         },
         stock_num:{
-          type:Sequelize.DATE,
+          type:Sequelize.INTEGER,
           allowNull:false,
         },
         stock_date:{
