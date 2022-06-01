@@ -79,7 +79,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /package/:
+ * /package:
  *   post:
  *     summary: register new package
  *     description: 

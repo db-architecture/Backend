@@ -1,4 +1,6 @@
 const model = require("../models");
+//택배 코드:7
+const package_code = 7;
 
 const Package = function(pacakge){
     this.weight = pacakge.weight;
@@ -14,16 +16,17 @@ const Package = function(pacakge){
 }
 
 Package.getAllPackageLsit = (type, results) =>{
-    if(type){
-        model.PackageCode.findOne({
+    // type이 주어진 경우
+    console.log(type)
+    if(type != null){
+        model.Code.findOne({
             raw: true,
-            where: {packagecode_name:type},
-            attributes:['packagecode']
+            where: {code:package_code, code_name:type},
+            attributes:['sec_code']
         }).then(codeValue =>{
             model.Package.findAll({
                 raw: true,
-                where: {pakage_type:codeValue}
-
+                where: {pakage_type:codeValue.sec_code}
             }).then(result=>{
                 console.log("get all package ("+type+")");
                 results(null,result);
@@ -37,13 +40,26 @@ Package.getAllPackageLsit = (type, results) =>{
             results(err, null);
         })
     }
+    //type이 주어지지 않은 경우
+    else{
+        model.Package.findAll({
+            raw:true,
+        }).then(result=>{
+            console.log("get all package");
+            results(null,result);
+        }).catch(err=>{
+            console.log("err occuered while get all package");
+            results(err, null);
+        })
+    }
 }
 
 Package.registerNewPackage = (package, results) => {
-    model.PackageCode.findOne({
+    console.log("repository")
+    model.Code.findOne({
         raw:true,
-        where: {packagecode_name:package.pakage_type},
-        attributes:['packagecode']
+        where: {code:package_code,code_name:package.pakage_type},
+        attributes:['sec_code']
     }).then(code => {
         model.Package.create({
             weight : package.weight,
@@ -55,7 +71,7 @@ Package.registerNewPackage = (package, results) => {
             s_name : package.s_name,
             commision : package.commision,
             package_price : package.package_price,
-            pakage_type : code
+            pakage_type : code.sec_code
           })
           .then(result => 
             {console.log("register package: ",{ ...package });

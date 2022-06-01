@@ -5,10 +5,6 @@ const Stock = require('./stock');
 const Buy = require('./buy');
 const Branch= require('./branch');
 const Package = require('./package');
-<<<<<<< HEAD
-const PackageCode= require('./packagecode');
-=======
->>>>>>> seedfile
 const Profit = require('./profit');
 const Cost = require('./cost');
 const Order = require('./order');
@@ -28,10 +24,6 @@ db.Stock = Stock;
 db.Buy = Buy;
 db.Branch= Branch;
 db.Package = Package;
-<<<<<<< HEAD
-db.PackageCode= PackageCode;
-=======
->>>>>>> seedfile
 db.Profit = Profit;
 db.Cost = Cost;
 db.Order = Order;
@@ -45,10 +37,6 @@ Stock.init(sequelize);
 Buy.init(sequelize);
 Branch.init(sequelize);
 Package.init(sequelize);
-<<<<<<< HEAD
-PackageCode.init(sequelize);
-=======
->>>>>>> seedfile
 Profit.init(sequelize);
 Cost.init(sequelize);
 Order.init(sequelize);
@@ -60,10 +48,6 @@ Code.init(sequelize);
 Stuff.associate(db);
 Stock.associate(db);
 Buy.associate(db);
-<<<<<<< HEAD
-=======
-Branch.associate(db);
->>>>>>> seedfile
 Package.associate(db);
 Profit.associate(db);
 Cost.associate(db);
