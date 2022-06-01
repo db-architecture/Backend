@@ -6,6 +6,7 @@ module.exports = class Employee extends Sequelize.Model {
       return super.init({
         employee_id : {
             type: Sequelize.INTEGER,
+            autoIncrement:true,
             primaryKey: true,
         },
         employee_name:{

@@ -10,10 +10,10 @@ exports.list = async(req, res) => {
      });
    };
 
-  let sd=req.body.startdate;
-  let ed=req.body.enddate;
-  let code=req.body.costcode;
-  let bi=req.body.branch_id;
+  let sd=req.query.startdate;
+  let ed=req.query.enddate;
+  let code=req.query.costcode;
+  let bi=req.query.branch_id;
 
 
   Profit_repo.findByCode_and_Date(sd,ed,code,bi,(err,data) => {
