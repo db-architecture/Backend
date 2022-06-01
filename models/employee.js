@@ -32,6 +32,7 @@ module.exports = class Employee extends Sequelize.Model {
     }
   
     static associate(db) {
-      db.UStock.belongsTo(db.Branch);
+      db.Employee.hasMany(db.Commute,{foreignKey:'employee_id',onDelete:'CASCADE'});
+      db.Employee.belongsTo(db.Branch,{foreignKey:'branch_id'});
     }
   };

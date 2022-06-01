@@ -60,6 +60,6 @@ module.exports = class Package extends Sequelize.Model {
     }
   
     static associate(db) {
-      db.Package.belongsTo(db.Branch);
+      db.Package.belongsTo(db.Branch,{foreignKey:'branch_id'});
     }
   };

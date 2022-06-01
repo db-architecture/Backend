@@ -12,10 +12,11 @@ exports.list = async(req, res) => {
 
   let sd=req.body.startdate;
   let ed=req.body.enddate;
-  let pc=req.body.costcode;
+  let code=req.body.costcode;
+  let bi=req.body.branch_id;
 
 
-  Profit_repo.list(sd,ed,pc,(err,data) => {
+  Profit_repo.findByCode_and_Date(sd,ed,code,bi,(err,data) => {
     if (err)
         res.status(500).send({
             message:
@@ -32,9 +33,11 @@ exports.refundcost= async(req,res)=>{
         });
     };
 
-    let bi=req.body.buyid;
+    let buyid=req.body.buyid;
+    let bi=req.body.branch_id;
+    let date = req.body.date;
 
-    Cost_repo.refundcost(bi,(err,data) => {
+    Cost_repo.refund(bi,date,buyid,(err,data) => {
         if (err)
             res.status(500).send({
                 message:
@@ -52,6 +55,9 @@ exports.disposalcost= async(req,res)=>{
     };
 
     let usc=req.body.ustockcode;
+    let buyid=req.body.buyid;
+    let bi=req.body.branch_id;
+    let date = req.body.date;
 
     UStock_repo.priceget(usc,(err,data)=>{
         if (err)
@@ -80,6 +86,9 @@ exports.salary= async(req,res)=>{
     };
 
     let id =req.body.employee_id;
+    let buyid=req.body.buyid;
+    let bi=req.body.branch_id;
+    let date = req.body.date;
 
     Employee_repo.salary(id,(err,data1)=>{
         if (err)

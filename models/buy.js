@@ -6,9 +6,14 @@ module.exports = class Buy extends Sequelize.Model {
       return super.init({
         buy_id : {
           type: Sequelize.INTEGER,
+          autoIncrement: true,
           primaryKey: true,
         },
         buy_num:{
+          type: Sequelize.INTEGER,
+          allowNull:false,
+        },
+        buycode:{
           type: Sequelize.INTEGER,
           allowNull:false,
         },
@@ -40,8 +45,7 @@ module.exports = class Buy extends Sequelize.Model {
     }
   
     static associate(db) {
-      db.Buy.belongsTo(db.Branch);
-      db.Buy.belongsTo(db.Stock);
-      db.Buy.belongsTo(db.BuyCode);
+      db.Buy.belongsTo(db.Branch,{foreignKey:'branch_id'});
+      db.Buy.belongsTo(db.Stock,{foreignKey:'stock_id'});
     }
   };
