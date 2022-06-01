@@ -4,13 +4,13 @@ const router = express.Router();
 
 // Create friend relationship
 
-router.get("/list",);
+// router.get("/list",cost.list);
 
-router.post("/refund",);
+// router.post("/refund",cost.refund);
 
-router.post("/disposal",);
+// router.post("/disposal",cost.disposal);
 
-router.post("/salary",);
+// router.post("/salary",cost.salary);
 
 module.exports = router;
 

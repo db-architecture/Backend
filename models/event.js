@@ -5,8 +5,13 @@ module.exports = class Event extends Sequelize.Model {
         // 속성 부분
       return super.init({
         id : {
-            type: Sequelize.INTEGER,
-            primaryKey: true,
+          type: Sequelize.INTEGER,
+          autoIncrement:true,
+          primaryKey: true,
+        },
+        eventcode:{
+          type: Sequelize.INTEGER,
+          allowNull:false,
         },
         startdate:{
           type:Sequelize.DATE,
@@ -36,7 +41,6 @@ module.exports = class Event extends Sequelize.Model {
     }
   
     static associate(db) {
-      db.Event.belongsTo(db.EventCode);
-      db.Event.belongsTo(db.Stock);
+      db.Event.belongsTo(db.Stuff,{foreignKey:'stuff_id'});
     }
   };

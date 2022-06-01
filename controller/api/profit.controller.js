@@ -3,16 +3,16 @@ const profit = require("../../service/profit.service.js");
 const router = express.Router();
 
 
-router.get("/list",);
+router.post("/list",profit.list);
 
-router.post("/newprofit",);
+router.post("/newprofit",profit.newprofit);
 
 module.exports = router;
 
 /**
  * @swagger
  * /profit/list:
- *   get:
+ *   post:
  *     summary: show profits
  *     description: show profits located in query
  *     tags: [profit]
@@ -31,12 +31,17 @@ module.exports = router;
  *                   type: date
  *                 enddate:
  *                   type: date
-*                 profitcode:
- *                   type: integer
+ *                 profitcode:
+ *                   type: array
+ *                   items:
+ *                      type:integer
+ *                 branch_id:
+ *                  type: integer
  *               example:
  *                 startdate: "2022-01-01"
  *                 enddate: "2022-01-30"
- *                 profitcode: 1
+ *                 profitcode: [1,2]
+ *                 branch_id: 1
  *     responses:
  *       "200":
  *         description: Created
@@ -47,17 +52,11 @@ module.exports = router;
  *                properties:
  *                  date:
  *                      type: date
- *                  loc:
- *                      type:string
  *                  profit:
  *                      type:number
- *                  methods:
- *                      type:string
  *                example:
  *                  date: "2022-01-01"
- *                  loc: 전농1동 25호점
  *                  profit: 800000
- *                  methods: 물건판매
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
@@ -70,7 +69,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /profit/new:
+ * /profit/newprofit:
  *   post:
  *     summary: update profit
  *     description: 
@@ -83,7 +82,7 @@ module.exports = router;
  *           application/json:
  *             schema:
  *               type: object
- *               required: date,profit,profitcode
+ *               required: date,profit,profitcode,branch_id
  *               properties:
  *                  date:
  *                      type: date
@@ -91,10 +90,13 @@ module.exports = router;
  *                      type: number
  *                  profitcode:
  *                      type: number
+ *                  branch_id:
+ *                   type: integer
  *               example:
  *                 date : "2022-01-05"
  *                 profit : 50000
  *                 profitcode : 1
+ *                 branch_id: 1
  *     responses:
  *       "200":
  *         description: Created
