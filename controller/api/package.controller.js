@@ -22,6 +22,11 @@ module.exports = router;
  *       - bearerAuth: []
  *     parameters:
  *       - in: query
+ *         name: branch
+ *         schema:
+ *           type: string
+ *         description: branch_name
+ *       - in: query
  *         name: package_type
  *         schema:
  *           type: string
@@ -94,6 +99,8 @@ module.exports = router;
  *               type: object
  *               required: weight,b_phone,b_address,b_name,s_phone,s_address,s_name,commision,package_price,pakage_type
  *               properties:
+ *                  branch:
+ *                      type: string
  *                  weight:
  *                      type: string
  *                  b_phone:
@@ -117,11 +124,12 @@ module.exports = router;
  * 
  * 
  *               example:
+ *                 branch : "전농1동 1호점"
  *                 weight : "1"
- *                 b_phone : "010-1234-5678"
+ *                 b_phone : "01012345678"
  *                 b_name : "김철수"
  *                 b_address : "GS 전농점"
- *                 s_phone : "010-1234-0123"
+ *                 s_phone : "01012340123"
  *                 s_address : "GS 강남정"
  *                 s_name : "김영희"
  *                 commision : "0"

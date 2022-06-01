@@ -2,7 +2,8 @@ const Package = require("../repository/package.repository.js");
 
 exports.getAllPackageLsit=async(req, res)=>{
     const type = req.query.package_type;
-    Package.getAllPackageLsit(type,(err,data)=>{
+    const brach = req.query.branch;
+    Package.getAllPackageLsit(type,brach,(err,data)=>{
         if(err)
         res.status(500).send({
             message:
@@ -20,6 +21,7 @@ exports.registerNewPackage=async(req, res)=>{
 
     //Regist a new Package
     const package = new Package({
+        branch : req.body.branch,
         weight : req.body.weight,
         b_phone : req.body.b_phone,
         b_address : req.body.b_address,
@@ -31,9 +33,6 @@ exports.registerNewPackage=async(req, res)=>{
         package_price : req.body.package_price,
         pakage_type : req.body.pakage_type
     });
-
-    console.log("service");
-    console.log(package);
     
     Package.registerNewPackage (package,(err,data)=>{
         console.log("service2")
