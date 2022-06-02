@@ -5,23 +5,23 @@ exports.applyOrder = (req, res) => {
         res.status(400).send({
           message: "req.body can not be empty!"
         });
+    } else {
+        order.createOrder({
+            order_num: req.body.order_num,
+            stuff_id: req.body.stuff_id,
+            branch_id: req.body.branch_id,
+        }, (err, result) => {
+            if(err) {
+                res.status(400).send({
+                    message: "applyOrder err"
+                });
+            } else {
+                res.send({
+                    order_id: result.order_id
+                });
+            }
+        });
     }
-
-    order.createOrder({
-        order_num: req.body.order_num,
-        stock_id: req.body.stock_id,
-        branch_id: order.branch_id,
-    }, (err, result) => {
-        if(err) {
-            res.status(400).send({
-                message: "applyOrder err"
-            });
-        } else {
-            res.send({
-                order_id: result.order_id
-            });
-        }
-    });
 }
 
 exports.getList = (req, res) => {
@@ -30,9 +30,7 @@ exports.getList = (req, res) => {
           message: "req.params can not be empty!"
         });
     } else {
-        order.findAllOrder({
-            branch_id: req.params.branchId,
-        }, (err, results) => {
+        order.findAllOrder(req.params.branch_id, (err, results) => {
             if (err) {
                 res.status(400).send({
                     message: "getList err"
@@ -51,7 +49,7 @@ exports.deleteOrder = (req, res) => {
           message: "req.params can not be empty!"
         });
     } else {
-        order.deleteOrder(req.params.orderId, (err, results) => {
+        order.deleteOrder(req.params.order_id, (err, results) => {
             if(err) {
                 res.status(400).send({
                     message: "deleteOrder err"
@@ -67,10 +65,40 @@ exports.deleteOrder = (req, res) => {
 
 exports.getNeccesaryList = (req, res) => {
     //order.findAllNeccesaryOrder
+    if (!req.params) {
+        res.status(400).send({
+          message: "req.params can not be empty!"
+        });
+    } else {
+        order.findAllNeccesaryOrder(req.params.branch_id, (err, results) => {
+            if(err) {
+                res.status(400).send({
+                    message: "getNeccesaryList err"
+                });
+            } else {
+                res.send(results);
+            }
+        })
+    }
 
 }
 
 exports.applyNeccesaryOrder = (req, res) => {
     //order.createNeccesaryOrder
+    if (!req.body) {
+        res.status(400),send({
+            message: "req.body can not be empty!"
+        });
+    } else {
+        order.createNeccesaryOrder(req.body.branch_id, (err, results) => {
+            if(err) {
+                res.status(400).send({
+                    message: "applyNeccesaryOrder err"
+                });
+            } else {
+                res.send(results);
+            }
+        });
+    }
     
 }

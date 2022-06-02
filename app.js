@@ -1,7 +1,6 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const cookieparser = require('cookie-parser');
 const apiroutes = require("./controller/api/");
 const docs = require("./controller/api/docs.controller")
 const { sequelize } = require("./models");
@@ -10,7 +9,6 @@ const app = express();
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}));
-app.use(cookieparser(process.env.COOKIE_SECRET));
 app.use( cors({ 
     origin: [  
       "http://localhost:8080","http://localhost:8081","http://localhost:3001" ], 

@@ -21,8 +21,6 @@ module.exports = class Order extends Sequelize.Model {
           type: Sequelize.DATE,
           allowNull:false,
         },
-        //stock_id, foreign key reference stock
-        //branch_id, foreing key referece branch
     }, {
         sequelize,
         timestamps:true,
@@ -34,7 +32,7 @@ module.exports = class Order extends Sequelize.Model {
     }
   
     static associate(db) {
-      db.Order.belongsTo(db.Stuff,{foreignKey: 'stuff_id'});
-      db.Order.belongsTo(db.Branch,{foreignKey: 'branch_id'});
+      db.Order.belongsTo(db.Stuff,{foreignKey: 'stuff_id', allowNull:false});
+      db.Order.belongsTo(db.Branch,{foreignKey: 'branch_id', allowNull:false});
     }
   };
