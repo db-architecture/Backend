@@ -29,7 +29,7 @@ module.exports = class Stock extends Sequelize.Model {
           type:Sequelize.INTEGER,
           allowNull:false,
         },
-        dis_bool:{
+        event_bool:{
           type:Sequelize.STRING(1),
           allowNull:false,
           defaultValue:'N',
@@ -54,6 +54,7 @@ module.exports = class Stock extends Sequelize.Model {
     }
   
     static associate(db) {
+      db.stock.hasMany(db.Order, {foreignKey: 'stock_id', targetKey: 'stock_id', onDelete: 'cascade', onUpdate: 'cascade'})
       db.Stock.belongsTo(db.StockCode);
     }
   };

@@ -7,6 +7,7 @@ module.exports = class Branch extends Sequelize.Model {
         branch_id : {
           type: Sequelize.INTEGER,
           primaryKey: true,
+          autoIncrement: true,
         },
         branch_name:{
           type: Sequelize.STRING(12),
@@ -42,9 +43,7 @@ module.exports = class Branch extends Sequelize.Model {
       });
     }
   
-    // static associate(db) {
-    //   db.Branch.belongsTo(db.RegionCode);
-    //   db.Buy.belongsTo(db.Stock);
-    //   db.Buy.belongsTo(db.BuyCode);
-    // }
+    static associate(db) {
+      db.Branch.hasMany(db.Order, {foreignKey: 'branch_id', targetKey: 'branch_id', onDelete: 'cascade', onUpdate: 'cascade'})
+    }
   };

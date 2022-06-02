@@ -21,6 +21,8 @@ module.exports = class Order extends Sequelize.Model {
           type: Sequelize.DATE,
           allowNull:false,
         },
+        //stock_id, foreign key reference stock
+        //branch_id, foreing key referece branch
     }, {
         sequelize,
         timestamps:true,

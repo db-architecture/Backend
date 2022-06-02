@@ -2,59 +2,62 @@ const model = require("../models");
 const { Op } = require("sequelize");
 
 const Order = function(order) {
-    this.itemId = order.itemId;
-    this.itemName = order.itemName
-    this.branchNum = order.branchNum
-    this.regionNum = order.regionNum
-    this.itemEA = order.itemEA
-    this.itemCost = order.itemCost
+    this.order_num = order.order_num;
+    this.order_cost = order.order_cost;
+    this.stock_id = order.stock_id;
+    this.branch_id = order.branch_id;
 }
 
 Order.createOrder = (order, results) => {
-    if(order.auto){
-        model.Order.create({
-            order_num: order.itemEA,
-            order_cost: order.itemCost,
-            item_id: order.itemId,
-            item_name: order.itemName,
-            branchNum: order.branchNum,
-            regionNum: order.regionNum, 
-        })
-        .then(result => {
-            console.log("order create", result);
-            return results(null, null);
-        })
-        .catch(err => {
-            console.log("createOrder err", err);
-            return results(err,null);
-        });
-    } else {
-        model.Order.create({
-            order_num: order.itemEA,
-            order_cost: order.itemCost,
-            item_id: order.itemId,
-            item_name: order.itemName,
-            branchNum: order.branchNum,
-            regionNum: order.regionNum, 
-        })
-        .then(result => {
-            console.log("order create", result);
-            return results(null, null);
-        })
-        .catch(err => {
-            console.log("createOrder err", err);
-            return results(err,null);
-        });
-    }
-    
+    //stock getPrice(id)필요
+    const cost = model.Stock.findOne({
+        where:{
+            stock_id: order.stock_id,
+        },
+        attributes:['fixed_price']
+    }).catch(err => {
+        console.log("createOrder getPrice err", err);
+        return;
+    });
+
+    model.Order.create({
+        order_num: order.order_num,
+        order_cost: order.order_num * cost,
+        stock_id: order.stock_id,
+        branch_id: order.branchId,
+    })
+    .then(result => {
+        console.log("order is created", result);
+        return results(null, result);
+    })
+    .catch(err => {
+        console.log("createOrder err", err);
+        return results(err,null);
+    });
+}
+
+Order.createNeccesaryOrder = (order, results) => {
+    model.Order.create({
+        order_num: order.order_num,
+        order_cost: order.order_cost,
+        stock_id: order.stock_id,
+        branch_id: order.branchId,
+    })
+    .then(result => {
+        console.log("order create", result);
+        return results(null, null);
+    })
+    .catch(err => {
+        console.log("createOrder err", err);
+        return results(err,null);
+    });
 }
 
 Order.findAllOrder = (branch, results) => {
     model.Order.findAll({
         raw: true,
         where: {
-            branchNum: branch.branchNum,
-            regionNum: branch.regionNum
+            branch_id: branch.branch_id,
         },
         //attributes:['']
     })
@@ -63,7 +66,7 @@ Order.findAllOrder = (branch, results) => {
         return results(null, result);
     })
     .catch(err => {
-        console.log("find All Orders err", err);
+        console.log("findAllOrders err", err);
         return results(err, null);
     });
 
@@ -74,16 +77,16 @@ Order.deleteOrder = (orderId, results) => {
         where: {order_id: orderId},
     })
     .then(result => {
-        console.log("delete Order");
+        console.log("Order is deleted");
         return results(null, result)
     })
     .catch(err => {
-        console.lod("delete Order err", err);
+        console.lod("deleteOrder err", err);
         return results(err, null);
     });
 }
 
-Order.findAllNeccesaryOrder = (branch, results) => {
+Order.findAllNeccesaryOrder = (results) => {
     model.Stock.findAll({
         raw: true,
         where: {
