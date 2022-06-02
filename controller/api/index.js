@@ -2,6 +2,7 @@ const express = require('express');
 const CostRoute = require('./cost.controller');
 const docsRoute = require('./docs.controller');
 const ProfitRoute = require('./profit.controller');
+const EmployeeRoute = require('./employee.controller');
 
 const router = express.Router();
 const defaultRoutes = [
@@ -13,6 +14,10 @@ const defaultRoutes = [
       path: '/profit',
       route: ProfitRoute,
     },
+    {
+      path: '/employee',
+      route: EmployeeRoute,
+    }
 ];
  
 const devRoutes = [

@@ -3,9 +3,9 @@ const profit = require("../../service/profit.service.js");
 const router = express.Router();
 
 
-router.get("/list",);
+router.get("/list",profit.list);
 
-router.post("/newprofit",);
+router.post("/newprofit",profit.newprofit);
 
 module.exports = router;
 
@@ -18,25 +18,23 @@ module.exports = router;
  *     tags: [profit]
  *     security:
  *       - bearerAuth: []
- *     requestBody:
- *         required: true
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               required:
- *                 - startdate,enddate
- *               properties:
- *                 startdate:
- *                   type: date
- *                 enddate:
- *                   type: date
-*                 profitcode:
- *                   type: integer
- *               example:
- *                 startdate: "2022-01-01"
- *                 enddate: "2022-01-30"
- *                 profitcode: 1
+ *     parameters:
+ *      - in: query
+ *        name: startdate
+ *        schema:
+ *          type: date
+ *      - in: query
+ *        name: enddate
+ *        schema:
+ *          type: date
+ *      - in: query
+ *        name: profitcode
+ *        schema:
+ *          type: integer
+ *      - in: query
+ *        name: branch_id
+ *        schema:
+ *          type: integer
  *     responses:
  *       "200":
  *         description: Created
@@ -47,17 +45,11 @@ module.exports = router;
  *                properties:
  *                  date:
  *                      type: date
- *                  loc:
- *                      type:string
  *                  profit:
  *                      type:number
- *                  methods:
- *                      type:string
  *                example:
  *                  date: "2022-01-01"
- *                  loc: 전농1동 25호점
  *                  profit: 800000
- *                  methods: 물건판매
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
@@ -70,7 +62,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /profit/new:
+ * /profit/newprofit:
  *   post:
  *     summary: update profit
  *     description: 
@@ -83,7 +75,7 @@ module.exports = router;
  *           application/json:
  *             schema:
  *               type: object
- *               required: date,profit,profitcode
+ *               required: date,profit,profitcode,branch_id
  *               properties:
  *                  date:
  *                      type: date
@@ -91,10 +83,13 @@ module.exports = router;
  *                      type: number
  *                  profitcode:
  *                      type: number
+ *                  branch_id:
+ *                   type: integer
  *               example:
  *                 date : "2022-01-05"
  *                 profit : 50000
  *                 profitcode : 1
+ *                 branch_id: 1
  *     responses:
  *       "200":
  *         description: Created

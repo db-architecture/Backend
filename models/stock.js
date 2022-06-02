@@ -5,13 +5,9 @@ module.exports = class Stock extends Sequelize.Model {
         // 속성 부분
       return super.init({
         stock_id : {
-            type: Sequelize.INTEGER,
-            primaryKey: true,
-        },
-        stock_name:{
-          type:Sequelize.DATE,
-          allowNull:false,
-          defaultValue:Sequelize.literal('now()'),
+          type: Sequelize.INTEGER,
+          autoIncrement:true,
+          primaryKey: true,
         },
         stock_num:{
           type:Sequelize.INTEGER,
@@ -20,28 +16,12 @@ module.exports = class Stock extends Sequelize.Model {
         stock_date:{
           type:Sequelize.DATE,
           allowNull:false,
-        },
-        first_cost:{
-          type:Sequelize.INTEGER,
-          allowNull:false,
-        },
-        fixed_price:{
-          type:Sequelize.INTEGER,
-          allowNull:false,
+          defaultValue:Sequelize.literal('now()'),
         },
         event_bool:{
           type:Sequelize.STRING(1),
           allowNull:false,
           defaultValue:'N',
-        },
-        provider:{
-          type:Sequelize.STRING(20),
-          allowNull:false,
-        },
-        auto_order_num:{
-          type:Sequelize.INTEGER,
-          allowNull:false,
-          defaultValue:0,
         },
     }, {
         sequelize,
@@ -54,7 +34,8 @@ module.exports = class Stock extends Sequelize.Model {
     }
   
     static associate(db) {
-      db.stock.hasMany(db.Order, {foreignKey: 'stock_id', targetKey: 'stock_id', onDelete: 'cascade', onUpdate: 'cascade'})
-      db.Stock.belongsTo(db.StockCode);
+      db.Stock.belongsTo(db.Stuff,{foreignKey:'stuff_id'});
+      db.Stock.belongsTo(db.Branch,{foreignKey:'branch_id'});
+      db.Stock.hasMany(db.Buy,{foreignKey:'stock_id'});
     }
   };

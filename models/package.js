@@ -1,14 +1,14 @@
 const Sequelize = require('sequelize');
 
-module.exports = class Deliver extends Sequelize.Model {
+module.exports = class Package extends Sequelize.Model {
     static init(sequelize) {
         // 속성 부분
       return super.init({
-        deliver_id : {
+        package_id : {
           type: Sequelize.INTEGER,
           primaryKey: true,
         },
-        deliver_type:{
+        package_type:{
           type:Sequelize.BOOLEAN,
           allowNull:false,
         },
@@ -44,14 +44,14 @@ module.exports = class Deliver extends Sequelize.Model {
           type:Sequelize.INTEGER,
           allowNull:false,
         },
-        deliver_price:{
+        package_price:{
           type:Sequelize.INTEGER,
           allowNull:false,
         },
     }, {
         sequelize,
         timestamps:true,
-        tableName: 'deliver',
+        tableName: 'package',
         paranoid : true, // 삭제일 (복구용)
         charset: 'utf8',
         collate: 'utf8_general_ci', // 삭제일 (복구용)
@@ -59,6 +59,6 @@ module.exports = class Deliver extends Sequelize.Model {
     }
   
     static associate(db) {
-      db.Deliver.belongsTo(db.Branch);
+      db.Package.belongsTo(db.Branch,{foreignKey:'branch_id'});
     }
   };

@@ -6,7 +6,12 @@ module.exports = class Profit extends Sequelize.Model {
       return super.init({
         profit_id : {
           type: Sequelize.INTEGER,
+          autoIncrement:true,
           primaryKey: true,
+        },
+        profitcode:{
+          type: Sequelize.INTEGER,
+          allowNull: false,
         },
         time:{
           type: Sequelize.DATE,
@@ -27,7 +32,6 @@ module.exports = class Profit extends Sequelize.Model {
     }
   
     static associate(db) {
-      db.Profit.belongsTo(db.Branch);
-      db.Profit.belongsTo(db.ProfitCode);
+      db.Profit.belongsTo(db.Branch,{foreignKey:'branch_id'});
     }
   };

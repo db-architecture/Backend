@@ -6,6 +6,7 @@ module.exports = class Employee extends Sequelize.Model {
       return super.init({
         employee_id : {
             type: Sequelize.INTEGER,
+            autoIncrement:true,
             primaryKey: true,
         },
         employee_name:{
@@ -32,6 +33,7 @@ module.exports = class Employee extends Sequelize.Model {
     }
   
     static associate(db) {
-      db.UStock.belongsTo(db.Branch);
+      db.Employee.hasMany(db.Commute,{foreignKey:'employee_id',onDelete:'CASCADE'});
+      db.Employee.belongsTo(db.Branch,{foreignKey:'branch_id'});
     }
   };

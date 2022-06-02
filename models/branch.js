@@ -6,6 +6,7 @@ module.exports = class Branch extends Sequelize.Model {
       return super.init({
         branch_id : {
           type: Sequelize.INTEGER,
+          autoIncrement:true,
           primaryKey: true,
           autoIncrement: true,
         },
@@ -44,6 +45,11 @@ module.exports = class Branch extends Sequelize.Model {
     }
   
     static associate(db) {
-      db.Branch.hasMany(db.Order, {foreignKey: 'branch_id', targetKey: 'branch_id', onDelete: 'cascade', onUpdate: 'cascade'})
+      db.Branch.hasMany(db.Profit,{foreignKey:'branch_id',onDelete:'CASCADE'})
+      db.Branch.hasMany(db.Cost,{foreignKey:'branch_id',onDelete:'CASCADE'})
+      db.Branch.hasMany(db.Employee,{foreignKey:'branch_id',onDelete:'CASCADE'})
+      db.Branch.hasMany(db.Stock,{foreignKey:'branch_id',onDelete:'CASCADE'})
+      db.Branch.hasMany(db.Buy,{foreignKey:'branch_id',onDelete:'CASCADE'})
+      db.Branch.hasMany(db.Package,{foreignKey:'branch_id',onDelete:'CASCADE'})
     }
   };

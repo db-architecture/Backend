@@ -1,6 +1,6 @@
 const Profit_repo = require("../repository/profit.repository.js");
 
-exports.list = async(req, res) => {
+exports.list = (req, res) => {
     // Validate request
     if (!req.body) {
      res.status(400).send({
@@ -8,12 +8,12 @@ exports.list = async(req, res) => {
      });
    };
 
-  let sd=req.body.startdate;
-  let ed=req.body.enddate;
-  let pc=req.body.profitcode;
+  let sd=req.query.startdate;
+  let ed=req.query.enddate;
+  let pc=req.query.profitcode;
+  let bi=req.query.branch_id;
 
-
-  Profit_repo.list(sd,ed,pc,(err,data) => {
+  Profit_repo.findByCode_and_Date(sd,ed,pc,bi,(err,data) => {
     if (err)
         res.status(500).send({
             message:
@@ -31,10 +31,11 @@ exports.newprofit= async(req,res)=>{
     };
 
     let date=req.body.date;
-    let price=req.body.price;
+    let profit=req.body.profit;
     let pc=req.body.profitcode;
+    let bi=req.body.branch_id;
 
-    Profit_repo.newprofit(date,price,pc,(err,data) => {
+    Profit_repo.update_profit(date,profit,pc,bi,(err,data) => {
         if (err)
             res.status(500).send({
                 message:
