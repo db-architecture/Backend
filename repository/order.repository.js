@@ -79,7 +79,7 @@ Order.findAllOrder = (branch_id, results) => {
         where: {
             branch_id: branch_id,
         },
-        //attributes:['']
+        attributes:['order_id','order_num','order_cost','time','stuff_id','branch_id'],
     })
     .then(result => {
         console.log("find All Orders");
