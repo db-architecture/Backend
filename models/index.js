@@ -59,5 +59,6 @@ Order.associate(db);
 Employee.associate(db);
 Commute.associate(db);
 Event.associate(db);
+User.associate(db);
 
 module.exports = db;

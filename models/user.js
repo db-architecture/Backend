@@ -30,4 +30,8 @@ module.exports = class User extends Sequelize.Model {
         collate: 'utf8_general_ci', // 삭제일 (복구용)
       });
     }
+
+    static associate(db) {
+      db.User.belongsTo(db.Branch,{foreignKey:'branch_id'});
+    }
   };

@@ -7,7 +7,7 @@ module.exports = () => {
         done(null, user.user_id);
     });
     
-    passport.deserializeUser((name, done) => {
+    passport.deserializeUser((id, done) => {
         console.log("local deserialize find");
         model.User.findOne({where: {user_id: id}})
         .then(result => {done(null,result)})
@@ -21,11 +21,13 @@ module.exports = () => {
           try {
               console.log("password find");
               const userFound = await model.User.findOne({
+                  raw: true,
                   where: {user_id: id},
+                  attributes: ['user_id', 'user_name', 'user_pw', 'type', 'branch_id']
               });
 
               if(userFound) {
-                if(userFound == password) {
+                if(userFound.user_pw == password) {
                     return done(null, userFound);
                 } else {
                     return done(null, false);

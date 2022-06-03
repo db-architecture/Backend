@@ -26,11 +26,9 @@ const defaultRoutes = [
     },
     {
       path: '/auth',
-      routs: AuthRoute,
+      route: AuthRoute,
     },
 ];
-
-console.log(AuthRoute)
  
 const devRoutes = [
   // routes available only in development mode
