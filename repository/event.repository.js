@@ -25,7 +25,7 @@ Event.registerNewEvent = (event, results)=>{
             model.Event.create({
                 stuff_id:stuff_id.stuff_id,
                 disprice:event.disprice,
-                disrate:event.disprice,
+                disrate:event.disrate,
                 startdate:event.startdate,
                 enddate:event.enddate,
                 eventcode:event_code_result.sec_code,
