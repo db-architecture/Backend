@@ -38,3 +38,14 @@ exports.getAllEvenetList = async(req,res)=>{
 };
 
 
+exports.deletEvent=async(req, res)=>{
+    const event_id = req.query.event_id;
+    Event.deletEvent(event_id,(err,data)=>{
+        if(err)
+        res.status(500).send({
+            message:
+             err.message || "Some error occurred while destroy pacakges."
+        });
+        else res.send(data);
+    });
+};

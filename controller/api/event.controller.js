@@ -5,19 +5,20 @@ const router = express.Router();
 // event list retrive
 router.get("/list",event.getAllEvenetList);
 
-// register new event
+// regist new event
 router.post("/",event.registerNewEvent);
 
-//
-//routher.delete("/",event.deletEvent)
+
+router.delete("/",event.deletEvent);
+
 module.exports = router;
 
 /**
  * @swagger
  * /event/list:
  *   get:
- *     summary: show package list
- *     description: show packages list
+ *     summary: show event list
+ *     description: show event list
  *     tags: [event]
  *     security:
  *       - bearerAuth: []
@@ -82,12 +83,11 @@ module.exports = router;
  * 
  */
 
-
 /**
  * @swagger
  * /event:
  *   post:
- *     summary: register new package
+ *     summary: register new event
  *     description: 
  *     tags: [event]
  *     security:
@@ -98,7 +98,7 @@ module.exports = router;
  *           application/json:
  *             schema:
  *               type: object
- *               required: stuff_name,disprice,disrate,startdate,enddate,event_type
+ *               required: stuff_name,startdate,enddate,event_type
  *               properties:
  *                  stuff_name:
  *                      type: string
@@ -112,7 +112,6 @@ module.exports = router;
  *                      type: string
  *                  event_type:
  *                      type: string
- * 
  * 
  *               example:
  *                 stuff_name : "슈넬"
@@ -157,4 +156,33 @@ module.exports = router;
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
+ */
+
+/**
+ * @swagger
+ * /event:
+ *   delete:
+ *    summary: "delete event"
+ *    description: "delete event"
+ *    tags: [event]
+ *    parameters:
+ *      - in: query
+ *        name: event_id
+ *        required: true
+ *        description: event_id
+ *        schema:
+ *          type: string
+ *    responses:
+ *      "202":
+ *        description:
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                users:
+ *                  type: object
+ *                  example:
+ *                    [
+ *                    ]
  */

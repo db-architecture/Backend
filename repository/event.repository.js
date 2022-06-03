@@ -134,4 +134,19 @@ Event.getAllEvenetList = (event_type,stuff_name,results)=>{
         })
     }
 }
+
+Event.deletEvent = (event_id, results) => {
+    model.Event.destroy({
+        where:{id:event_id}
+    }).then(result=>{
+        console.log("delte event...done")
+        results(null,202)
+
+    }).catch(err=>{
+        console.log("err occured while deleting event");
+        results(err,null);
+    })
+
+}
+
 module.exports = Event;
