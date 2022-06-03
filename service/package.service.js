@@ -35,7 +35,6 @@ exports.registerNewPackage=async(req, res)=>{
     });
     
     Package.registerNewPackage (package,(err,data)=>{
-        console.log("service2")
         if (err) 
         res.status(500).send({message : err.message 
             || "Some error occurred while creating the User."

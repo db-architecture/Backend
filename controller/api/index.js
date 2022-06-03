@@ -3,6 +3,7 @@ const CostRoute = require('./cost.controller');
 const docsRoute = require('./docs.controller');
 const ProfitRoute = require('./profit.controller');
 const packageRoute = require('./package.controller')
+const eventRoute = require('./event.controller')
 
 const router = express.Router();
 const defaultRoutes = [
@@ -17,6 +18,10 @@ const defaultRoutes = [
     {
       path: '/package',
       route: packageRoute,
+    },
+    {
+      path: '/event',
+      route: eventRoute,
     },
 ];
  
