@@ -4,6 +4,7 @@ const docsRoute = require('./docs.controller');
 const ProfitRoute = require('./profit.controller');
 const EmployeeRoute = require('./employee.controller');
 const OrderRoute = require('./order.controller');
+const AuthRoute = require('./auth.controller');
 
 const router = express.Router();
 const defaultRoutes = [
@@ -23,8 +24,13 @@ const defaultRoutes = [
       path: '/order',
       route: OrderRoute,
     },
-
+    {
+      path: '/auth',
+      routs: AuthRoute,
+    },
 ];
+
+console.log(AuthRoute)
  
 const devRoutes = [
   // routes available only in development mode

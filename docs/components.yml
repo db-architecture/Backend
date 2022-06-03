@@ -45,7 +45,7 @@ components:
           type: integer
         stock_num:
           type: integer
-        stock_data:
+        stock_date:
           type: date
         event_bool:
           type: string

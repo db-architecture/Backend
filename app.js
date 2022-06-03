@@ -1,6 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const session = require('express-session');
+const passport = require('passport');
+const passportConfig = require('./passport/passportConfig')
 const apiroutes = require("./controller/api/");
 const docs = require("./controller/api/docs.controller")
 const { sequelize } = require("./models");
@@ -17,14 +20,13 @@ app.use( cors({
        optionsSuccessStatus: 204, 
        credentials: false, }) );
 
-// sequelize.sync({ force: false })
-//   .then(() => {
-//     console.log('Successfully connected');
-//   })
-//   .catch((err) => {
-//     console.error(err);
-// });
-
+app.use(session({
+  resave: true,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passportConfig();
 //DB sync
 sequelize.sync({ force: false })
   .then(() => {

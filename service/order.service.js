@@ -96,7 +96,9 @@ exports.applyNeccesaryOrder = (req, res) => {
                     message: "applyNeccesaryOrder err"
                 });
             } else {
-                res.send(results);
+                res.send({
+                    message: results
+                });
             }
         });
     }
