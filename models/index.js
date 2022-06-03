@@ -51,7 +51,6 @@ User.init(sequelize);
 Stuff.associate(db);
 Stock.associate(db);
 Buy.associate(db);
-Branch.associate(db);
 Package.associate(db);
 Profit.associate(db);
 Cost.associate(db);

@@ -6,11 +6,8 @@ module.exports = class Package extends Sequelize.Model {
       return super.init({
         package_id : {
           type: Sequelize.INTEGER,
+          autoIncrement: true,
           primaryKey: true,
-        },
-        package_type:{
-          type:Sequelize.BOOLEAN,
-          allowNull:false,
         },
         weight:{
           type:Sequelize.FLOAT,
@@ -48,6 +45,10 @@ module.exports = class Package extends Sequelize.Model {
           type:Sequelize.INTEGER,
           allowNull:false,
         },
+        pakage_type:{
+          type:Sequelize.INTEGER,
+          allowNull:false
+        }
     }, {
         sequelize,
         timestamps:true,
