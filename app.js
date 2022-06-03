@@ -14,11 +14,11 @@ app.use(express.urlencoded({extended:true}));
 app.use(cookieparser(process.env.COOKIE_SECRET));
 app.use( cors({ 
     origin: [  
-      "http://localhost:8080","http://localhost:8081" ], 
+      "http://localhost:8080","http://localhost:8081","http://localhost:3001" ], 
       methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
        preflightContinue: false, 
        optionsSuccessStatus: 204, 
-       credentials: true, }) );
+       credentials: false, }) );
 
 // const mySqlOption = {
 //     host: process.env.DB_HOST,

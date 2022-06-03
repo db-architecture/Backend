@@ -29,6 +29,6 @@ module.exports = class Commute extends Sequelize.Model {
     }
   
     static associate(db) {
-      db.Commute.belongsTo(db.Employee);
+      db.Commute.belongsTo(db.Employee,{foreignKey:'employee_id'});
     }
   };

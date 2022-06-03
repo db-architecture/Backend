@@ -6,7 +6,12 @@ module.exports = class Cost extends Sequelize.Model {
       return super.init({
         cost_id : {
             type: Sequelize.INTEGER,
+            autoIncrement:true,
             primaryKey: true,
+        },
+        costcode:{
+          type: Sequelize.INTEGER,
+          allowNull:false,
         },
         cost_size:{
           type: Sequelize.INTEGER,
@@ -27,7 +32,6 @@ module.exports = class Cost extends Sequelize.Model {
     }
   
     static associate(db) {
-      db.Cost.belongsTo(db.Branch);
-      db.Cost.belongsTo(db.CostCode);
+      db.Cost.belongsTo(db.Branch,{foreignKey:'branch_id'});
     }
   };

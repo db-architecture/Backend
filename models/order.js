@@ -6,6 +6,7 @@ module.exports = class Order extends Sequelize.Model {
       return super.init({
         order_id : {
             type: Sequelize.INTEGER,
+            autoIncrement:true,
             primaryKey: true,
         },
         order_num:{
@@ -31,7 +32,7 @@ module.exports = class Order extends Sequelize.Model {
     }
   
     static associate(db) {
-      db.Order.belongsTo(db.Stock);
-      db.Order.belongsTo(db.Branch);
+      db.Order.belongsTo(db.Stuff,{foreignKey: 'stuff_id'});
+      db.Order.belongsTo(db.Branch,{foreignKey: 'branch_id'});
     }
   };
