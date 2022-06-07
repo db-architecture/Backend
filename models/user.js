@@ -1,38 +1,37 @@
 const Sequelize = require('sequelize');
 
-module.exports = class Order extends Sequelize.Model {
+module.exports = class User extends Sequelize.Model {
     static init(sequelize) {
         // 속성 부분
       return super.init({
-        order_id : {
-            type: Sequelize.INTEGER,
-            autoIncrement:true,
+        user_id : {
+            type: Sequelize.STRING,
             primaryKey: true,
         },
-        order_num:{
-          type: Sequelize.INTEGER,
+        user_name:{
+            type: Sequelize.STRING,
+            allowNull:false,
+          },
+        user_pw:{
+          type: Sequelize.STRING,
           allowNull:false,
         },
-        order_cost:{
+        type:{
           type: Sequelize.INTEGER,
           allowNull:false,
-        },
-        time:{
-          type: Sequelize.DATE,
-          allowNull:false,
+          defaultValue: 1
         },
     }, {
         sequelize,
         timestamps:true,
-        tableName: 'order',
+        tableName: 'user',
         paranoid : true, // 삭제일 (복구용)
         charset: 'utf8',
         collate: 'utf8_general_ci', // 삭제일 (복구용)
       });
     }
-  
+
     static associate(db) {
-      db.Order.belongsTo(db.Stuff,{foreignKey: 'stuff_id', allowNull:false});
-      db.Order.belongsTo(db.Branch,{foreignKey: 'branch_id', allowNull:false});
+      db.User.belongsTo(db.Branch,{foreignKey:'branch_id'});
     }
   };

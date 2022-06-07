@@ -13,9 +13,7 @@ Profit.findByCode_and_Date = (start,end,code,bi,results) =>{
                 [Sequelize.Op.gte]:start,
                 [Sequelize.Op.lte]:end
             },
-            profitcode:{
-                [Sequelize.Op.in]:code,
-            },
+            profitcode:code,
             branch_id:bi,
         },
         attributes:['time','day_profit'],

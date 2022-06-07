@@ -1,17 +1,17 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const cookieparser = require('cookie-parser');
+const session = require('express-session');
+const passport = require('passport');
+const passportConfig = require('./passport/passportConfig')
 const apiroutes = require("./controller/api/");
 const docs = require("./controller/api/docs.controller")
-//const mySqlStore = require('express-mysql-session')(session);
 const { sequelize } = require("./models");
 
 const app = express();
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}));
-app.use(cookieparser(process.env.COOKIE_SECRET));
 app.use( cors({ 
     origin: [  
       "http://localhost:8080","http://localhost:8081","http://localhost:3001" ], 
@@ -20,24 +20,14 @@ app.use( cors({
        optionsSuccessStatus: 204, 
        credentials: false, }) );
 
-// const mySqlOption = {
-//     host: process.env.DB_HOST,
-//     port: process.env.DB_PORT,
-//     user: process.env.DB_USERNAME,
-//     password: process.env.DB_PASSWORD,
-//     database: process.env.DB_DATABASE
-// };
-
-//const sessionStore = new mySqlStore(mySqlOption);
-
-// sequelize.sync({ force: false })
-//   .then(() => {
-//     console.log('Successfully connected');
-//   })
-//   .catch((err) => {
-//     console.error(err);
-// });
-
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passportConfig();
 //DB sync
 sequelize.sync({ force: false })
   .then(() => {

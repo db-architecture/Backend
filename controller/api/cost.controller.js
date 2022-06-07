@@ -2,9 +2,7 @@ const express = require('express');
 const cost = require("../../service/cost.service.js");
 const router = express.Router();
 
-// Create friend relationship
-
-// router.get("/list",cost.list);
+router.get("/list",cost.list);
 
 // router.post("/refund",cost.refund);
 
@@ -23,25 +21,23 @@ module.exports = router;
  *     tags: [cost]
  *     security:
  *       - bearerAuth: []
- *     requestBody:
- *         required: true
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               required:
- *                 - startdate,enddate
- *               properties:
- *                 startdate:
- *                   type: date
- *                 enddate:
- *                   type: date
- *                 costcode:
- *                   type: integer
- *               example:
- *                 startdate: 2022-01-01
- *                 enddate: 2022-01-30
- *                 costcode: 1
+ *     parameters:
+ *      - in: query
+ *        name: startdate
+ *        schema:
+ *          type: date
+ *      - in: query
+ *        name: enddate
+ *        schema:
+ *          type: date
+ *      - in: query
+ *        name: profitcode
+ *        schema:
+ *          type: integer
+ *      - in: query
+ *        name: branch_id
+ *        schema:
+ *          type: integer
  *     responses:
  *       "200":
  *         description: Created

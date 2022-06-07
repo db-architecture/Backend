@@ -3,7 +3,7 @@ const profit = require("../../service/profit.service.js");
 const router = express.Router();
 
 
-router.post("/list",profit.list);
+router.get("/list",profit.list);
 
 router.post("/newprofit",profit.newprofit);
 
@@ -12,36 +12,29 @@ module.exports = router;
 /**
  * @swagger
  * /profit/list:
- *   post:
+ *   get:
  *     summary: show profits
  *     description: show profits located in query
  *     tags: [profit]
  *     security:
  *       - bearerAuth: []
- *     requestBody:
- *         required: true
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               required:
- *                 - startdate,enddate
- *               properties:
- *                 startdate:
- *                   type: date
- *                 enddate:
- *                   type: date
- *                 profitcode:
- *                   type: array
- *                   items:
- *                      type:integer
- *                 branch_id:
- *                  type: integer
- *               example:
- *                 startdate: "2022-01-01"
- *                 enddate: "2022-01-30"
- *                 profitcode: [1,2]
- *                 branch_id: 1
+ *     parameters:
+ *      - in: query
+ *        name: startdate
+ *        schema:
+ *          type: date
+ *      - in: query
+ *        name: enddate
+ *        schema:
+ *          type: date
+ *      - in: query
+ *        name: profitcode
+ *        schema:
+ *          type: integer
+ *      - in: query
+ *        name: branch_id
+ *        schema:
+ *          type: integer
  *     responses:
  *       "200":
  *         description: Created

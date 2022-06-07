@@ -8,6 +8,7 @@ module.exports = class Branch extends Sequelize.Model {
           type: Sequelize.INTEGER,
           autoIncrement:true,
           primaryKey: true,
+          autoIncrement: true,
         },
         branch_name:{
           type: Sequelize.STRING(12),
@@ -50,5 +51,6 @@ module.exports = class Branch extends Sequelize.Model {
       db.Branch.hasMany(db.Stock,{foreignKey:'branch_id',onDelete:'CASCADE'})
       db.Branch.hasMany(db.Buy,{foreignKey:'branch_id',onDelete:'CASCADE'})
       db.Branch.hasMany(db.Package,{foreignKey:'branch_id',onDelete:'CASCADE'})
+      db.Branch.hasMany(db.User,{foreignKey:'branch_id',onDelete:'CASCADE'})
     }
   };

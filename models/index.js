@@ -12,6 +12,7 @@ const Employee = require('./employee');
 const Commute = require('./commute');
 const Event = require('./event');
 const Code = require('./code');
+const User = require('./user')
 const db = {};
 
 // dba, root, admin
@@ -31,6 +32,7 @@ db.Employee = Employee;
 db.Commute = Commute;
 db.Event = Event;
 db.Code = Code;
+db.User = User;
 
 Stuff.init(sequelize);
 Stock.init(sequelize);
@@ -44,6 +46,7 @@ Employee.init(sequelize);
 Commute.init(sequelize);
 Event.init(sequelize); 
 Code.init(sequelize);
+User.init(sequelize);
 
 Stuff.associate(db);
 Stock.associate(db);
@@ -55,5 +58,6 @@ Order.associate(db);
 Employee.associate(db);
 Commute.associate(db);
 Event.associate(db);
+User.associate(db);
 
 module.exports = db;

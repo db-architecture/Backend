@@ -10,7 +10,7 @@ module.exports = class Stock extends Sequelize.Model {
           primaryKey: true,
         },
         stock_num:{
-          type:Sequelize.DATE,
+          type:Sequelize.INTEGER,
           allowNull:false,
         },
         stock_date:{
@@ -18,7 +18,7 @@ module.exports = class Stock extends Sequelize.Model {
           allowNull:false,
           defaultValue:Sequelize.literal('now()'),
         },
-        dis_bool:{
+        event_bool:{
           type:Sequelize.STRING(1),
           allowNull:false,
           defaultValue:'N',
