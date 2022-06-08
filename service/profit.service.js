@@ -11,7 +11,7 @@ exports.list = (req, res) => {
   let sd=req.query.startdate;
   let ed=req.query.enddate;
   let pc=req.query.profitcode;
-  let bi=req.query.branch_id;
+  let bi=req.user.branch_id;
   let sc=req.query.sumcode;
 
   Profit_repo.findByCode_and_Date(sd,ed,pc,bi,sc,(err,data) => {
@@ -32,8 +32,9 @@ exports.newprofit= async(req,res)=>{
     };
 
     let data_arr = req.body;
+    let bi = req.user.branch_id;
 
-    Profit_repo.update_profit(data_arr,(err,data) => {
+    Profit_repo.update_profit(data_arr,bi,(err,data) => {
         if (err)
             res.status(500).send({
                 message:

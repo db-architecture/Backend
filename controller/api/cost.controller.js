@@ -37,10 +37,6 @@ module.exports = router;
  *        schema:
  *          type: integer
  *      - in: query
- *        name: branch_id
- *        schema:
- *          type: integer
- *      - in: query
  *        name: sumcode
  *        schema:
  *          type: integer
@@ -89,20 +85,24 @@ module.exports = router;
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               required:
- *                 - startdate,enddate
- *               properties:
- *                 startdate:
- *                   type: date
- *                 enddate:
- *                   type: date
- *                 costcode:
- *                   type: integer
+ *               type: array
+ *               items:
+ *                  type: object
+ *                  required: date,profit,profitcode
+ *                  properties:
+ *                      time:
+ *                          type: date
+ *                      cost_size:
+ *                          type: integer
+ *                      costcode:
+ *                          type: integer
  *               example:
- *                 startdate: 2022-01-01
- *                 enddate: 2022-01-30
- *                 costcode: 1
+ *                 - time: 2022-01-01
+ *                   cost_size: 50000
+ *                   costcode: 1
+ *                 - time: 2022-01-01
+ *                   cost_size: 100000
+ *                   costcode: 2
  *     responses:
  *       "200":
  *         description: Created
