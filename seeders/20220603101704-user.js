@@ -17,6 +17,7 @@ module.exports = {
       user_pw: '5678',
       type: 1,
       branch_id: 1,
+      employee_id: 1,
       createdAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
       updatedAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
     },
