@@ -8,9 +8,7 @@ router.post("/login", passport.authenticate('local'), (req, res) => {
             message: "Unauthorized"
         });
     } else {
-        res.send({
-            user_name: req.user.user_name
-        })
+        res.redirect('/docs')
     }
 });
 

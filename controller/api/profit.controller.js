@@ -28,11 +28,15 @@ module.exports = router;
  *        schema:
  *          type: date
  *      - in: query
+ *        name: branch_id
+ *        schema:
+ *          type: integer
+ *      - in: query
  *        name: profitcode
  *        schema:
  *          type: integer
  *      - in: query
- *        name: branch_id
+ *        name: sumcode
  *        schema:
  *          type: integer
  *     responses:
@@ -47,9 +51,12 @@ module.exports = router;
  *                      type: date
  *                  profit:
  *                      type:number
+ *                  profitcode:
+ *                      type:number
  *                example:
  *                  date: "2022-01-01"
  *                  profit: 800000
+ *                  profitcode: 1
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":

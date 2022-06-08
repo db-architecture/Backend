@@ -12,8 +12,9 @@ exports.list = (req, res) => {
   let ed=req.query.enddate;
   let pc=req.query.profitcode;
   let bi=req.query.branch_id;
+  let sc=req.query.sumcode;
 
-  Profit_repo.findByCode_and_Date(sd,ed,pc,bi,(err,data) => {
+  Profit_repo.findByCode_and_Date(sd,ed,pc,bi,sc,(err,data) => {
     if (err)
         res.status(500).send({
             message:
