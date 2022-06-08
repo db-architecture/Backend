@@ -28,10 +28,6 @@ module.exports = router;
  *        schema:
  *          type: date
  *      - in: query
- *        name: branch_id
- *        schema:
- *          type: integer
- *      - in: query
  *        name: profitcode
  *        schema:
  *          type: integer
@@ -84,7 +80,7 @@ module.exports = router;
  *               type: array
  *               items:
  *                  type: object
- *                  required: date,profit,profitcode,branch_id
+ *                  required: date,profit,profitcode
  *                  properties:
  *                      date:
  *                          type: date
@@ -92,17 +88,13 @@ module.exports = router;
  *                          type: number
  *                      profitcode:
  *                          type: number
- *                      branch_id:
- *                          type: integer
  *               example:
  *                 - date : "2022-01-05"
  *                   profit : 50000
  *                   profitcode : 1
- *                   branch_id: 1
  *                 - date : "2022-01-05"
  *                   profit : 100000
  *                   profitcode : 2
- *                   branch_id: 1
  *     responses:
  *       "200":
  *         description: Created

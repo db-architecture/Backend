@@ -67,7 +67,7 @@ Profit.findByCode_and_Date = (start,end,code,bi,sumcode,results) =>{
     }
 }
 
-Profit.update_profit = async(data_arr,results) =>{
+Profit.update_profit = async(data_arr,bi,results) =>{
 
     try{
         let i;
@@ -77,7 +77,7 @@ Profit.update_profit = async(data_arr,results) =>{
                 time:data_arr[i].date,
                 day_profit:data_arr[i].profit,
                 profitcode:data_arr[i].profitcode,
-                branch_id:data_arr[i].branch_id,
+                branch_id:bi,
             })
 
             if (result == null){

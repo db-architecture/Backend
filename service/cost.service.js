@@ -13,11 +13,11 @@ exports.list = async(req, res) => {
   let sd=req.query.startdate;
   let ed=req.query.enddate;
   let code=req.query.costcode;
-  let bi=req.query.branch_id;
+  let bi=req.user.branch_id;
   let sc=req.query.sumcode;
 
 
-  Profit_repo.findByCode_and_Date(sd,ed,code,bi,sc,(err,data) => {
+  Cost_repo.findByCode_and_Date(sd,ed,code,bi,sc,(err,data) => {
     if (err)
         res.status(500).send({
             message:
@@ -33,12 +33,11 @@ exports.newcost = async(req,res)=>{
           message: "Content can not be empty!"
         });
     };
+    
+    let data_arr = req.body;
+    let bi = req.user.branch_id;
 
-    let buyid=req.body.buyid;
-    let bi=req.body.branch_id;
-    let date = req.body.date;
-
-    Cost_repo.refund(bi,date,buyid,(err,data) => {
+    Cost_repo.update_cost(data_arr,bi,(err,data) => {
         if (err)
             res.status(500).send({
                 message:
