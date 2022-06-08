@@ -25,21 +25,28 @@ Profit.findByCode_and_Date = (start,end,code,bi,results) =>{
     })
 }
 
-Profit.update_profit = (date,price,code,bi,results) =>{
-    model.Profit.create({
-        time:date,
-        day_profit:price,
-        profitcode:code,
-        branch_id:bi,
-    }).then(result=>{
-        if (result == null){
-            throw new {msg:"Create incomplete"}
+Profit.update_profit = async(data_arr,results) =>{
+
+    try{
+        let i;
+        for (i=0; i<data_arr.length; i++){
+            result = await model.Profit.create({
+                time:data_arr[i].date,
+                day_profit:data_arr[i].profit,
+                profitcode:data_arr[i].profitcode,
+                branch_id:data_arr[i].branch_id,
+            })
+
+            if (result == null){
+                throw new {msg:"Create incomplete"}
+            }
         }
-        results(null,{msg:"Create complete"})
-    }).catch(err=>{
+    }catch(err){
         results(err,null)
         console.log(err)
-    })
+    }
+
+    results(null,{msg:"Create complete"})
 }
 
 module.exports = Profit;

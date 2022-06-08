@@ -30,12 +30,9 @@ exports.newprofit= async(req,res)=>{
         });
     };
 
-    let date=req.body.date;
-    let profit=req.body.profit;
-    let pc=req.body.profitcode;
-    let bi=req.body.branch_id;
+    let data_arr = req.body;
 
-    Profit_repo.update_profit(date,profit,pc,bi,(err,data) => {
+    Profit_repo.update_profit(data_arr,(err,data) => {
         if (err)
             res.status(500).send({
                 message:
