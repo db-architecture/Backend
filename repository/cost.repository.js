@@ -4,21 +4,81 @@ const Sequelize = require('sequelize')
 const Cost = ()=>{}
 
 Cost.findByCode_and_Date = (start,end,code,bi,results)=>{
-    model.Cost.findAll({
-        raw:true,
-        where:{
-            time:{
-                [Sequelize.Op.gte]:start,
-                [Sequelize.Op.lte]:end
+    if (sumcode == 0){
+
+        if (code == null){
+            model.Cost.findAll({
+                raw:true,
+                where:{
+                    time:{
+                        [Sequelize.Op.gte]:start,
+                        [Sequelize.Op.lte]:end
+                    },
+                    branch_id:bi,
+                },
+                attributes:['time','cost_size','costcode'],
+            }).then(result=>{
+                results(null,result)
+            }).catch(err=>{
+                results(err,null)
+                console.log(err)
+            })
+        }
+        else{
+            model.Cost.findAll({
+                raw:true,
+                where:{
+                    time:{
+                        [Sequelize.Op.gte]:start,
+                        [Sequelize.Op.lte]:end
+                    },
+                    costcode:code,
+                    branch_id:bi,
+                },
+                attributes:['time','cost_size'],
+            }).then(result=>{
+                results(null,result)
+            }).catch(err=>{
+                results(err,null)
+                console.log(err)
+            })
+        }
+
+    }
+    else{
+        model.Cost.findAll({
+            raw:true,
+            where:{
+                time:{
+                    [Sequelize.Op.gte]:start,
+                    [Sequelize.Op.lte]:end
+                },
+                branch_id:bi,
             },
-            costcode:{
-                [Sequelize.Op.in]:code,
-            },
-            branch_id:bi,
-        },
-        attributes:['time','cost_size'],
+            attributes:[[Sequelize.fn('sum', Sequelize.col('cost_size')), 'sumCost']],
+        }).then(result=>{
+            results(null,result)
+        }).catch(err=>{
+            results(err,null)
+            console.log(err)
+        })
+    }
+}
+
+Cost.refund = async (bi,date,buyid,results)=>{
+    const buy = await model.Buy.findByPk(buyid)
+    const p = buy.price
+
+    model.Cost.create({
+        time:date,
+        costcode:6,
+        branch_id: bi,
+        cost_size: p,
     }).then(result=>{
-        results(null,result)
+        if (result == null){
+            throw new {msg:"Create incomplete"}
+        }
+        results(null,{msg:"Create complete"})
     }).catch(err=>{
         results(err,null)
         console.log(err)
