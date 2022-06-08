@@ -74,22 +74,28 @@ module.exports = router;
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               required: date,profit,profitcode,branch_id
- *               properties:
- *                  date:
- *                      type: date
- *                  profit:
- *                      type: number
- *                  profitcode:
- *                      type: number
- *                  branch_id:
- *                   type: integer
+ *               type: array
+ *               items:
+ *                  type: object
+ *                  required: date,profit,profitcode,branch_id
+ *                  properties:
+ *                      date:
+ *                          type: date
+ *                      profit:
+ *                          type: number
+ *                      profitcode:
+ *                          type: number
+ *                      branch_id:
+ *                          type: integer
  *               example:
- *                 date : "2022-01-05"
- *                 profit : 50000
- *                 profitcode : 1
- *                 branch_id: 1
+ *                 - date : "2022-01-05"
+ *                   profit : 50000
+ *                   profitcode : 1
+ *                   branch_id: 1
+ *                 - date : "2022-01-05"
+ *                   profit : 100000
+ *                   profitcode : 2
+ *                   branch_id: 1
  *     responses:
  *       "200":
  *         description: Created
