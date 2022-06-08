@@ -9,8 +9,6 @@ router.get("/list",employee.list);
 
 router.put("/salary",employee.salary);
 
-// router.get("/commutelist",employee.commutelist);
-
 router.delete("/fire",employee.fire);
 
 module.exports = router;
