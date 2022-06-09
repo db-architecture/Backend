@@ -10,6 +10,7 @@ const eventRoute = require('./event.controller')
 const authority = require('../middleware/authorityCheck');
 const commuteRoute = require('./commute.controller');
 const buyRoute = require('./buy.controller');
+const stuffRoute = require('./stuff.controller');
 
 const router = express.Router();
 
@@ -21,6 +22,10 @@ const authority_null = [
 ]
 
 const authority_employee = [
+  {
+    path: '/stuff',
+    route: stuffRoute,
+  },
   {
     path: '/cost',
     route: CostRoute,

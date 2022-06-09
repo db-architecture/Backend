@@ -28,7 +28,7 @@ module.exports = router;
  *           application/json:
  *             schema:
  *               type: object
- *               required: employee_name,employee_phone,salary,branch_id
+ *               required: employee_name,employee_phone,salary
  *               properties:
  *                  employee_name:
  *                      type: string
@@ -36,13 +36,16 @@ module.exports = router;
  *                      type: string
  *                  salary:
  *                      type: integer
- *                  branch_id:
- *                   type: integer
+ *                  id:
+ *                      type: string
+ *                  pw:
+ *                      type: string
  *               example:
- *                 employee_name : "김편돌"
- *                 employee_phone : "01024445555"
- *                 salary : 10000
- *                 branch_id: 1
+ *                 employee_name : "김모찌"
+ *                 employee_phone : "01024446666"
+ *                 salary : 11000
+ *                 id: gimochi
+ *                 pw: gimochi
  *     responses:
  *       "200":
  *         description: Created
@@ -75,11 +78,6 @@ module.exports = router;
  *     tags: [employee]
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *      - in: query
- *        name: branch_id
- *        schema:
- *          type: integer
  *     responses:
  *       "200":
  *         description: Created
@@ -95,6 +93,7 @@ module.exports = router;
  *                 salary:
  *                  type:integer
  *               example:
+ *                 employee_id: 2
  *                 employee_name : "김편돌"
  *                 employee_phone : "01024445555"
  *                 salary : 10000
@@ -129,12 +128,9 @@ module.exports = router;
  *                      type: string
  *                  salary:
  *                      type: integer
- *                  branch_id:
- *                   type: integer
  *               example:
  *                 employee_name : "김편돌"
  *                 salary : 10000
- *                 branch_id: 1
  *     responses:
  *       "200":
  *         description: Created
@@ -177,11 +173,8 @@ module.exports = router;
  *               properties:
  *                  employee_name:
  *                      type: string
- *                  branch_id:
- *                   type: integer
  *               example:
  *                 employee_name : "김편돌"
- *                 branch_id: 1
  *     responses:
  *       "200":
  *         description: Created

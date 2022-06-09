@@ -6,12 +6,6 @@ router.get("/list",cost.list);
 
 router.post("/newcost",cost.newcost)
 
-// router.post("/refund",cost.refund);
-
-// router.post("/disposal",cost.disposal);
-
-// router.post("/salary",cost.salary);
-
 module.exports = router;
 
 /**
@@ -96,6 +90,12 @@ module.exports = router;
  *                          type: integer
  *                      costcode:
  *                          type: integer
+ *                      buy_id:
+ *                          type: integer
+ *                          nullable: true
+ *                      stock_id:
+ *                          type: integer
+ *                          nullable: true
  *               example:
  *                 - time: 2022-01-01
  *                   cost_size: 50000
@@ -103,6 +103,13 @@ module.exports = router;
  *                 - time: 2022-01-01
  *                   cost_size: 100000
  *                   costcode: 2
+ *                 - time: 2022-01-01
+ *                   costcode: 6
+ *                   buy_id: 1
+ *                 - time: 2022-01-01
+ *                   costcode: 7
+ *                   stock_id: 1
+ *                    
  *     responses:
  *       "200":
  *         description: Created
@@ -118,183 +125,6 @@ module.exports = router;
  *               example:
  *                 code: 200
  *                 message: "success"
- *       "400":
- *         $ref: '#/components/responses/DuplicateEmail'
- *       "401":
- *         $ref: '#/components/responses/Unauthorized'
- *       "403":
- *         $ref: '#/components/responses/Forbidden'
- * 
- * 
- */
-
-/**
- * @swagger
- * /cost/refund:
- *   post:
- *     summary: update refund costs
- *     description: refund will be processed
- *     tags: [cost]
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *         required: true
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               required:
- *                 - startdate,enddate
- *               properties:
- *                 startdate:
- *                   type: date
- *                 enddate:
- *                   type: date
- *                 costcode:
- *                   type: integer
- *               example:
- *                 startdate: 2022-01-01
- *                 enddate: 2022-01-30
- *                 costcode: 1
- *     responses:
- *       "200":
- *         description: Created
- *         content:
- *           application/json:
- *             schema:
-*                type: object
- *                properties:
- *                  date:
- *                      type: date
- *                  loc:
- *                      type:string
- *                  cost:
- *                      type:number
- *                  methods:
- *                      type:string
- *                example:
- *                  date: "2022-01-01"
- *                  loc: 전농1동 25호점
- *                  cost: 800000
- *                  methods: 발주
- *       "400":
- *         $ref: '#/components/responses/DuplicateEmail'
- *       "401":
- *         $ref: '#/components/responses/Unauthorized'
- *       "403":
- *         $ref: '#/components/responses/Forbidden'
- * 
- * 
- */
-
-/**
- * @swagger
- * /cost/disposal:
- *   post:
- *     summary: update disposal costs
- *     description: disposal costs will be updated
- *     tags: [cost]
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *         required: true
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               required:
- *                 - startdate,enddate
- *               properties:
- *                 startdate:
- *                   type: date
- *                 enddate:
- *                   type: date
- *                 costcode:
- *                   type: integer
- *               example:
- *                 startdate: 2022-01-01
- *                 enddate: 2022-01-30
- *                 costcode: 1
- *     responses:
- *       "200":
- *         description: Created
- *         content:
- *           application/json:
- *             schema:
-*                type: object
- *                properties:
- *                  date:
- *                      type: date
- *                  loc:
- *                      type:string
- *                  cost:
- *                      type:number
- *                  methods:
- *                      type:string
- *                example:
- *                  date: "2022-01-01"
- *                  loc: 전농1동 25호점
- *                  cost: 800000
- *                  methods: 발주
- *       "400":
- *         $ref: '#/components/responses/DuplicateEmail'
- *       "401":
- *         $ref: '#/components/responses/Unauthorized'
- *       "403":
- *         $ref: '#/components/responses/Forbidden'
- * 
- * 
- */
-
-/**
- * @swagger
- * /cost/salary:
- *   post:
- *     summary: update salary costs
- *     description: salary costs will be updated
- *     tags: [cost]
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *         required: true
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               required:
- *                 - startdate,enddate
- *               properties:
- *                 startdate:
- *                   type: date
- *                 enddate:
- *                   type: date
- *                 costcode:
- *                   type: integer
- *               example:
- *                 startdate: 2022-01-01
- *                 enddate: 2022-01-30
- *                 costcode: 1
- *     responses:
- *       "200":
- *         description: Created
- *         content:
- *           application/json:
- *             schema:
-*                type: object
- *                properties:
- *                  date:
- *                      type: date
- *                  loc:
- *                      type:string
- *                  cost:
- *                      type:number
- *                  methods:
- *                      type:string
- *                example:
- *                  date: "2022-01-01"
- *                  loc: 전농1동 25호점
- *                  cost: 800000
- *                  methods: 발주
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
