@@ -6,57 +6,35 @@ const Profit = ()=>{
 }
 
 Profit.findByCode_and_Date = (start,end,code,bi,sumcode,results) =>{
+
+    let where = {
+        time:{
+            [Sequelize.Op.gte]: start,
+            [Sequelize.Op.lte]: end,
+        },
+        branch_id:bi,
+    }
+
+    if (!(code == null)){
+        where = Object.assign(where,{profitcode: code})
+    }
+
     if (sumcode == 0){
-
-        if (code == null){
-            model.Profit.findAll({
-                raw:true,
-                where:{
-                    time:{
-                        [Sequelize.Op.gte]:start,
-                        [Sequelize.Op.lte]:end
-                    },
-                    branch_id:bi,
-                },
-                attributes:['time','day_profit','profitcode'],
-            }).then(result=>{
-                results(null,result)
-            }).catch(err=>{
-                results(err,null)
-                console.log(err)
-            })
-        }
-        else{
-            model.Profit.findAll({
-                raw:true,
-                where:{
-                    time:{
-                        [Sequelize.Op.gte]:start,
-                        [Sequelize.Op.lte]:end
-                    },
-                    profitcode:code,
-                    branch_id:bi,
-                },
-                attributes:['time','day_profit'],
-            }).then(result=>{
-                results(null,result)
-            }).catch(err=>{
-                results(err,null)
-                console.log(err)
-            })
-        }
-
+        model.Profit.findAll({
+            raw:true,
+            where:where,
+            attributes:['time','day_profit','profitcode'],
+        }).then(result=>{
+            results(null,result)
+        }).catch(err=>{
+            results(err,null)
+            console.log(err)
+        })
     }
     else{
         model.Profit.findAll({
             raw:true,
-            where:{
-                time:{
-                    [Sequelize.Op.gte]:start,
-                    [Sequelize.Op.lte]:end
-                },
-                branch_id:bi,
-            },
+            where:where,
             attributes:[[Sequelize.fn('sum', Sequelize.col('day_profit')), 'sumProfit']],
         }).then(result=>{
             results(null,result)
