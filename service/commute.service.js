@@ -15,10 +15,9 @@ exports.commute = async(req,res) => {
 }
 
 exports.commutelist = async(req,res) => {
-    let id = req.user.employee_id
     let startd = req.query.startd
     let endd = req.query.endd
-    Commute_repo.commute_list(id, startd, endd, (err,data)=>{
+    Commute_repo.commute_list(startd, endd, (err,data)=>{
         if (err)
             res.status(500).send({
                 message:

@@ -19,15 +19,18 @@ Commute.commute_new = (id,s,e,results)=>{
     })
 }
 
-Commute.commutelist = (id,s,e,results)=>{
+Commute.commute_list = (s,e,results)=>{
     model.Commute.findAll({
         raw:true,
         where:{
-            employee_id: id,
-            commute_start: s,
-            commute_end: e,
+            commute_start: {
+                [Sequelize.Op.gte]: s
+            },
+            commute_end: {
+                [Sequelize.Op.lte]: e
+            },
         },
-        attributes:[commute_start,commute_end,employee_id],
+        attributes:['commute_start','commute_end','employee_id'],
     }).then(result=>{
         results(null,result)
     }).catch(err=>{
