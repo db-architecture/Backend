@@ -42,6 +42,24 @@ module.exports = {
       createdAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
       updatedAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
     },
+    {
+      user_id: 'employer2',
+      user_name: "원점주",
+      user_pw: '1357',
+      type: 0,
+      branch_id: 2,
+      createdAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+      updatedAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+    },
+    {
+      user_id: 'employee2',
+      user_name: "원알바",
+      user_pw: '2468',
+      type: 1,
+      branch_id: 2,
+      createdAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+      updatedAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+    },
     ], {});
   },
 

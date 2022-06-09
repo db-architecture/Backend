@@ -4,6 +4,8 @@ const router = express.Router();
 
 router.get("/list",cost.list);
 
+router.post("/newcost",cost.newcost)
+
 // router.post("/refund",cost.refund);
 
 // router.post("/disposal",cost.disposal);
@@ -31,11 +33,11 @@ module.exports = router;
  *        schema:
  *          type: date
  *      - in: query
- *        name: profitcode
+ *        name: costcode
  *        schema:
  *          type: integer
  *      - in: query
- *        name: branch_id
+ *        name: sumcode
  *        schema:
  *          type: integer
  *     responses:
@@ -59,6 +61,63 @@ module.exports = router;
  *                  loc: 전농1동 25호점
  *                  cost: 800000
  *                  methods: 발주
+ *       "400":
+ *         $ref: '#/components/responses/DuplicateEmail'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ * 
+ * 
+ */
+
+/**
+ * @swagger
+ * /cost/newcost:
+ *   post:
+ *     summary: update refund costs
+ *     description: refund will be processed
+ *     tags: [cost]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                  type: object
+ *                  required: date,profit,profitcode
+ *                  properties:
+ *                      time:
+ *                          type: date
+ *                      cost_size:
+ *                          type: integer
+ *                      costcode:
+ *                          type: integer
+ *               example:
+ *                 - time: 2022-01-01
+ *                   cost_size: 50000
+ *                   costcode: 1
+ *                 - time: 2022-01-01
+ *                   cost_size: 100000
+ *                   costcode: 2
+ *     responses:
+ *       "200":
+ *         description: Created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                  code:
+ *                      type: number
+ *                  message:
+ *                      type: string
+ *               example:
+ *                 code: 200
+ *                 message: "success"
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":

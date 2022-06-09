@@ -32,7 +32,7 @@ module.exports = router;
  *        schema:
  *          type: integer
  *      - in: query
- *        name: branch_id
+ *        name: sumcode
  *        schema:
  *          type: integer
  *     responses:
@@ -47,9 +47,12 @@ module.exports = router;
  *                      type: date
  *                  profit:
  *                      type:number
+ *                  profitcode:
+ *                      type:number
  *                example:
  *                  date: "2022-01-01"
  *                  profit: 800000
+ *                  profitcode: 1
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
@@ -74,22 +77,24 @@ module.exports = router;
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               required: date,profit,profitcode,branch_id
- *               properties:
- *                  date:
- *                      type: date
- *                  profit:
- *                      type: number
- *                  profitcode:
- *                      type: number
- *                  branch_id:
- *                   type: integer
+ *               type: array
+ *               items:
+ *                  type: object
+ *                  required: date,profit,profitcode
+ *                  properties:
+ *                      date:
+ *                          type: date
+ *                      profit:
+ *                          type: number
+ *                      profitcode:
+ *                          type: number
  *               example:
- *                 date : "2022-01-05"
- *                 profit : 50000
- *                 profitcode : 1
- *                 branch_id: 1
+ *                 - date : "2022-01-05"
+ *                   profit : 50000
+ *                   profitcode : 1
+ *                 - date : "2022-01-05"
+ *                   profit : 100000
+ *                   profitcode : 2
  *     responses:
  *       "200":
  *         description: Created

@@ -7,6 +7,7 @@ module.exports = class Commute extends Sequelize.Model {
         commute_id : {
             type: Sequelize.INTEGER,
             primaryKey: true,
+            autoIncrement: true,
         },
         commute_start:{
           type:Sequelize.DATE,
@@ -32,3 +33,6 @@ module.exports = class Commute extends Sequelize.Model {
       db.Commute.belongsTo(db.Employee,{foreignKey:'employee_id'});
     }
   };
+
+
+  

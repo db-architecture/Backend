@@ -3,26 +3,93 @@ const Sequelize = require('sequelize')
 
 const Cost = ()=>{}
 
-Cost.findByCode_and_Date = (start,end,code,bi,results)=>{
-    model.Cost.findAll({
-        raw:true,
-        where:{
-            time:{
-                [Sequelize.Op.gte]:start,
-                [Sequelize.Op.lte]:end
+Cost.findByCode_and_Date = (start,end,code,bi,sumcode,results)=>{
+    if (sumcode == 0){
+
+        if (code == null){
+            model.Cost.findAll({
+                raw:true,
+                where:{
+                    time:{
+                        [Sequelize.Op.gte]:start,
+                        [Sequelize.Op.lte]:end
+                    },
+                    branch_id:bi,
+                },
+                attributes:['time','cost_size','costcode'],
+            }).then(result=>{
+                results(null,result)
+            }).catch(err=>{
+                results(err,null)
+                console.log(err)
+            })
+        }
+        else{
+            model.Cost.findAll({
+                raw:true,
+                where:{
+                    time:{
+                        [Sequelize.Op.gte]:start,
+                        [Sequelize.Op.lte]:end
+                    },
+                    costcode:code,
+                    branch_id:bi,
+                },
+                attributes:['time','cost_size'],
+            }).then(result=>{
+                results(null,result)
+            }).catch(err=>{
+                results(err,null)
+                console.log(err)
+            })
+        }
+
+    }
+    else{
+        model.Cost.findAll({
+            raw:true,
+            where:{
+                time:{
+                    [Sequelize.Op.gte]:start,
+                    [Sequelize.Op.lte]:end
+                },
+                branch_id:bi,
             },
-            costcode:{
-                [Sequelize.Op.in]:code,
-            },
-            branch_id:bi,
-        },
-        attributes:['time','cost_size'],
-    }).then(result=>{
-        results(null,result)
-    }).catch(err=>{
+            attributes:[[Sequelize.fn('sum', Sequelize.col('cost_size')), 'sumCost']],
+        }).then(result=>{
+            results(null,result)
+        }).catch(err=>{
+            results(err,null)
+            console.log(err)
+        })
+    }
+}
+
+Cost.update_cost= async(data_arr,bi,results) =>{
+
+    try{
+        let i;
+        for (i=0; i<data_arr.length; i++){
+
+            result = await model.Cost.create({
+                costcode:data_arr[i].costcode,
+                cost_size:data_arr[i].cost_size,
+                time:data_arr[i].time,
+                branch_id: bi
+            })
+
+
+            if (result == null){
+                throw new {msg:"Cost Create incomplete"}
+            }
+
+        }
+    }catch(err){
         results(err,null)
         console.log(err)
-    })
+    }
+
+    results(null,{msg:"Create complete"})
 }
 
 Cost.refund = async (bi,date,buyid,results)=>{
@@ -78,3 +145,5 @@ Cost.salary = () =>{
         console.log(err)
     })
 }
+
+module.exports = Cost;

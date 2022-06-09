@@ -208,6 +208,16 @@ module.exports = {
         createdAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
         updatedAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
       },
+      {
+        code: 7, sec_code: 1, code_name: '택배',
+        createdAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+        updatedAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+      },
+      {
+        code: 7, sec_code: 2, code_name: '반값택배',
+        createdAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+        updatedAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+      }
    ], {});
 },
 

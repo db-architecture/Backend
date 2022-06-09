@@ -12,6 +12,7 @@ module.exports = class Stuff extends Sequelize.Model {
         stuff_name:{
           type:Sequelize.STRING(40),
           allowNull:false,
+          primaryKey: true,
         },
         stuffcode:{
           type:Sequelize.INTEGER,

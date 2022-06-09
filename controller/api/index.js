@@ -5,7 +5,11 @@ const ProfitRoute = require('./profit.controller');
 const EmployeeRoute = require('./employee.controller');
 const OrderRoute = require('./order.controller');
 const AuthRoute = require('./auth.controller');
+const packageRoute = require('./package.controller')
+const eventRoute = require('./event.controller')
 const authority = require('../middleware/authorityCheck');
+const commuteRoute = require('./commute.controller');
+const buyRoute = require('./buy.controller');
 
 const router = express.Router();
 
@@ -25,6 +29,18 @@ const authority_employee = [
     path: '/profit',
     route: ProfitRoute,
   },
+  {
+    path: '/package',
+    route: packageRoute,
+  },
+  {
+    path: '/commute',
+    route: commuteRoute,
+  },
+  {
+    path: '/buy',
+    route: buyRoute,
+  },
 ]
 
 const authority_employer = [
@@ -36,8 +52,12 @@ const authority_employer = [
     path: '/order',
     route: OrderRoute,
   },
+  {
+    path: '/event',
+    route: eventRoute,
+  },
 ]
- 
+
 const devRoutes = [
   // routes available only in development mode
   {

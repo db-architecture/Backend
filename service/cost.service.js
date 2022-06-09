@@ -1,6 +1,5 @@
 const Cost_repo = require("../repository/cost.repository.js");
 const UStock_repo = require("../repository/ustock.repository.js")
-const Employee = require("../models/employee")
 
 exports.list = async(req, res) => {
     // Validate request
@@ -13,10 +12,11 @@ exports.list = async(req, res) => {
   let sd=req.query.startdate;
   let ed=req.query.enddate;
   let code=req.query.costcode;
-  let bi=req.query.branch_id;
+  let bi=req.user.branch_id;
+  let sc=req.query.sumcode;
 
 
-  Profit_repo.findByCode_and_Date(sd,ed,code,bi,(err,data) => {
+  Cost_repo.findByCode_and_Date(sd,ed,code,bi,sc,(err,data) => {
     if (err)
         res.status(500).send({
             message:
@@ -24,6 +24,26 @@ exports.list = async(req, res) => {
         });
         else res.send(data);
     });
+}
+
+exports.newcost = async(req,res)=>{
+    if (!req.body) {
+        res.status(400).send({
+          message: "Content can not be empty!"
+        });
+    };
+    
+    let data_arr = req.body;
+    let bi = req.user.branch_id;
+
+    Cost_repo.update_cost(data_arr,bi,(err,data) => {
+        if (err)
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred"
+            });
+            else res.send(data);
+        });
 }
 
 exports.refundcost= async(req,res)=>{
