@@ -13,19 +13,14 @@ module.exports = class Stock extends Sequelize.Model {
           type:Sequelize.INTEGER,
           allowNull:false,
         },
-        stock_date:{
+        expired_date:{
           type:Sequelize.DATE,
           allowNull:false,
           defaultValue:Sequelize.literal('now()'),
         },
-        event_bool:{
-          type:Sequelize.STRING(1),
-          allowNull:false,
-          defaultValue:'N',
-        },
     }, {
         sequelize,
-        timestamps:false, //createdAt, UpdatedAt 자동 추가
+        timestamps:true, //createdAt, UpdatedAt 자동 추가
         tableName: 'stock',
         paranoid : true, // 삭제일 (복구용)
         charset: 'utf8',
