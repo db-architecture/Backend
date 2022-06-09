@@ -13,7 +13,6 @@ const Commute = require('./commute');
 const Event = require('./event');
 const Code = require('./code');
 const User = require('./user');
-const Ordernum = require('./ordernum');
 const db = {};
 
 // dba, root, admin

@@ -19,12 +19,11 @@ module.exports = class Employee extends Sequelize.Model {
         },
         salary:{
           type:Sequelize.INTEGER,
-          allowNull:false,
-          defaultValue:9160,
+          allowNull:true,
         },
     }, {
         sequelize,
-        timestamps:false, //createdAt, UpdatedAt 자동 추가
+        timestamps: true, //createdAt, UpdatedAt 자동 추가
         tableName: 'employee',
         paranoid : true, // 삭제일 (복구용)
         charset: 'utf8',

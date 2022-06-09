@@ -48,8 +48,12 @@ exports.deleteOrder = (req, res) => {
         res.status(400).send({
           message: "req.params can not be empty!"
         });
+    } else if (!req.user) {
+        res.status(401).send({
+            message: "Unauthorized"
+          });
     } else {
-        order.deleteOrder(req.params.order_id, (err, results) => {
+        order.deleteOrder(req.params.order_id, req.user.branch_id, (err, results) => {
             if(err) {
                 res.status(400).send({
                     message: "deleteOrder err"

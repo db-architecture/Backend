@@ -51,9 +51,12 @@ Order.findAllOrder = (branch_id, results) => {
     });
 }
 
-Order.deleteOrder = (order_id, results) => {
+Order.deleteOrder = (order_id, branch_id, results) => {
     model.Order.destroy({
-        where: {order_id: order_id},
+        where: {
+            order_id: order_id,
+            branch_id: branch_id,
+        },
     })
     .then(result => {
         console.log("Order is deleted");

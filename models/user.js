@@ -33,6 +33,6 @@ module.exports = class User extends Sequelize.Model {
 
     static associate(db) {
       db.User.belongsTo(db.Branch,{foreignKey:'branch_id'});
-      db.User.belongsTo(db.employee,{foreignKey:'employee_id'});
+      db.User.belongsTo(db.Employee,{foreignKey:'employee_id'});
     }
   };
