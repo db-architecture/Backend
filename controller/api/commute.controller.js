@@ -23,16 +23,13 @@ module.exports = router;
  *           application/json:
  *             schema:
  *               type: object
- *               required: id,startd,endd
+ *               required: startd,endd
  *               properties:
- *                  id:
- *                      type: integer
  *                  startd:
  *                      type: date
  *                  endd:
  *                      type: date
  *               example:
- *                 id : 1
  *                 startd : "2022-01-01 00:00:00"
  *                 endd : "2022-01-01 08:00:00"
  *     responses:
@@ -92,12 +89,9 @@ module.exports = router;
  *                   type: date
  *                 commute_end:
  *                   type: date
- *                 employee_id:
- *                   type: integer
  *               example:
  *                 commute_start: "2022-01-01 00:00:00"
  *                 commute_end: "2022-01-01 08:00:00"
- *                 employee_id: "김철수"
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":

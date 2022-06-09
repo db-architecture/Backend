@@ -37,12 +37,12 @@ exports.newbuy = async(req,res)=>{
     let data_arr = req.body;
     let bi = req.user.branch_id;
 
-    Cost_repo.update_buy(data_arr,bi,(err,data) => {
+    Buy_repo.update_buy(data_arr,bi,(err,data) => {
         if (err)
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred"
+                    err || "Some error occurred"
             });
-            else res.send(data);
-        });
+        else res.send(data);
+    });
 }
