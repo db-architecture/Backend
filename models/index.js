@@ -12,7 +12,7 @@ const Employee = require('./employee');
 const Commute = require('./commute');
 const Event = require('./event');
 const Code = require('./code');
-const User = require('./user')
+const User = require('./user');
 const db = {};
 
 // dba, root, admin
@@ -59,5 +59,6 @@ Employee.associate(db);
 Commute.associate(db);
 Event.associate(db);
 User.associate(db);
+
 
 module.exports = db;

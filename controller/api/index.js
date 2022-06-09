@@ -67,7 +67,6 @@ const devRoutes = [
 ];
 
 
-
 devRoutes.forEach((route) => {
   router.use(route.path,route.route);
 });
