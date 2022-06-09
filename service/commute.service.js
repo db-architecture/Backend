@@ -15,7 +15,7 @@ exports.commute = async(req,res) => {
 }
 
 exports.commutelist = async(req,res) => {
-    let id = req.query.emp_id
+    let id = req.user.employee_id
     let startd = req.query.startd
     let endd = req.query.endd
     Commute_repo.commute_list(id, startd, endd, (err,data)=>{

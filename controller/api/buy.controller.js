@@ -105,34 +105,29 @@ module.exports = router;
  *                      sex:
  *                          type: integer
  *                          nullable: true
- *                      price:
- *                          type: integer
  *                      time:
  *                          type: date
- *                      stock_id:
+ *                      stuff_id:
  *                          type: integer
  *               example:
- *                 - buy_num: 5
+ *                 - buy_num: 1
  *                   buycode: 1
  *                   age: 20
  *                   sex: 0
- *                   price: 20000
  *                   time: '2022-01-01'
- *                   stock_id: 1
+ *                   stuff_id: 1
  *                 - buy_num: 2
  *                   buycode: 1
  *                   age: 20
  *                   sex: 0
- *                   price: 30000
  *                   time: '2022-01-01'
- *                   stock_id: 2
+ *                   stuff_id: 2
  *                 - buy_num: 3
  *                   buycode: 1
  *                   age: 23
  *                   sex: 1
- *                   price: 30000
  *                   time: '2022-01-02'
- *                   stock_id: 3
+ *                   stuff_id: 4
  *     responses:
  *       "200":
  *         description: Created
@@ -154,6 +149,20 @@ module.exports = router;
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
+ *       "500":
+ *         description: server error
+ *         content:
+ *          application/json:
+ *              schema:
+ *                  type: object
+ *                  properties:
+ *                      code:
+ *                          type: number
+ *                      message:
+ *                          type: string
+ *                  example:
+ *                      code: 500
+ *                      message: "something error"
  * 
  * 
  */
