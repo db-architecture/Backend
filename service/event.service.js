@@ -29,7 +29,7 @@ exports.getAllEvenetList = async(req,res)=>{
     const stuff_name = req.query.stuff_name;
     Event.getAllEvenetList(event_type,stuff_name,(err,data)=>{
         if(err)
-        res.staus(500).send({
+        res.status(500).send({
             message:
                 err.message || "Some err occured while retrieving event"
         });
