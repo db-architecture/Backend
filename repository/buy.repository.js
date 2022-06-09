@@ -178,6 +178,17 @@ Buy.update_buy= async(data_arr,bi,results) =>{
                     throw "Buy Create incomplete"
                 }
 
+                result = await model.Profit.create({
+                    time:data_arr[iter].time,
+                    day_profit:p*(stock_arr[j].stock_num),
+                    profitcode:1,
+                    branch_id:bi,
+                })
+
+                if (result == null){
+                    throw "Profit Create incomplete"
+                }
+
                 j+=1;
             }
 
