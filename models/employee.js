@@ -19,7 +19,7 @@ module.exports = class Employee extends Sequelize.Model {
         },
         salary:{
           type:Sequelize.INTEGER,
-          allowNull:false,
+          allowNull:true,
           defaultValue:9160,
         },
     }, {
