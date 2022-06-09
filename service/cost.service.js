@@ -1,6 +1,5 @@
 const Cost_repo = require("../repository/cost.repository.js");
 const UStock_repo = require("../repository/ustock.repository.js")
-const Employee = require("../models/employee")
 
 exports.list = async(req, res) => {
     // Validate request

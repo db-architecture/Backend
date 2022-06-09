@@ -8,7 +8,7 @@ router.get("/list",event.getAllEvenetList);
 // regist new event
 router.post("/",event.registerNewEvent);
 
-
+// delete new event
 router.delete("/",event.deletEvent);
 
 module.exports = router;

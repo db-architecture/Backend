@@ -8,6 +8,8 @@ const AuthRoute = require('./auth.controller');
 const packageRoute = require('./package.controller')
 const eventRoute = require('./event.controller')
 const authority = require('../middleware/authorityCheck');
+const commuteRoute = require('./commute.controller');
+const buyRoute = require('./buy.controller');
 
 const router = express.Router();
 
@@ -30,6 +32,14 @@ const authority_employee = [
   {
     path: '/package',
     route: packageRoute,
+  },
+  {
+    path: '/commute',
+    route: commuteRoute,
+  },
+  {
+    path: '/buy',
+    route: buyRoute,
   },
 ]
 
