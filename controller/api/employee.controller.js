@@ -3,19 +3,19 @@ const employee = require("../../service/employee.service.js");
 const router = express.Router();
 
 
-router.post("/newemployee",employee.newemployee);
+router.post("/",employee.newemployee);
 
-router.get("/list",employee.list);
+router.get("/",employee.list);
 
 router.put("/salary",employee.salary);
 
-router.delete("/fire",employee.fire);
+router.delete("/",employee.fire);
 
 module.exports = router;
 
 /**
  * @swagger
- * /employee/newemployee:
+ * /employee:
  *   post:
  *     summary: create employee
  *     description: 
@@ -71,7 +71,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /employee/list:
+ * /employee:
  *   get:
  *     summary: show employee
  *     description:
@@ -156,7 +156,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /employee/fire:
+ * /employee:
  *   delete:
  *     summary: fire employee
  *     description: 

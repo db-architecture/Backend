@@ -2,15 +2,15 @@ const express = require('express');
 const employee = require("../../service/commute.service.js");
 const router = express.Router();
 
-router.post("/commute",employee.commute);
+router.post("/",employee.commute);
 
-router.get("/list",employee.commutelist);
+router.get("/",employee.commutelist);
 
 module.exports = router;
 
 /**
  * @swagger
- * /commute/commute:
+ * /commute:
  *   post:
  *     summary: create commute
  *     description: 
@@ -57,7 +57,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /commute/list:
+ * /commute:
  *   get:
  *     summary: show commute list
  *     description:

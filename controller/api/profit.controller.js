@@ -3,15 +3,15 @@ const profit = require("../../service/profit.service.js");
 const router = express.Router();
 
 
-router.get("/list",profit.list);
+router.get("/",profit.list);
 
-router.post("/newprofit",profit.newprofit);
+router.post("/",profit.newprofit);
 
 module.exports = router;
 
 /**
  * @swagger
- * /profit/list:
+ * /profit:
  *   get:
  *     summary: show profits
  *     description: show profits located in query
@@ -65,7 +65,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /profit/newprofit:
+ * /profit:
  *   post:
  *     summary: update profit
  *     description: 

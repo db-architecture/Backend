@@ -3,7 +3,7 @@ const package = require("../../service/package.service.js");
 const router = express.Router();
 
 // package list retrive
-router.get("/list",package.getAllPackageLsit);
+router.get("/",package.getAllPackageLsit);
 
 // register new package
 router.post("/",package.registerNewPackage);
@@ -13,7 +13,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /package/list:
+ * /package:
  *   get:
  *     summary: show package list
  *     description: show packages list

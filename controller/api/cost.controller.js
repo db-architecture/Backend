@@ -2,15 +2,15 @@ const express = require('express');
 const cost = require("../../service/cost.service.js");
 const router = express.Router();
 
-router.get("/list",cost.list);
+router.get("/",cost.list);
 
-router.post("/newcost",cost.newcost)
+router.post("/",cost.newcost)
 
 module.exports = router;
 
 /**
  * @swagger
- * /cost/list:
+ * /cost:
  *   get:
  *     summary: show costs
  *     description: show costs located in query
@@ -67,7 +67,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /cost/newcost:
+ * /cost:
  *   post:
  *     summary: update refund costs
  *     description: refund will be processed

@@ -2,15 +2,15 @@ const express = require('express');
 const buy = require("../../service/buy.service.js");
 const router = express.Router();
 
-router.get("/list",buy.list);
+router.get("/",buy.list);
 
-router.post("/newbuy",buy.newbuy)
+router.post("/",buy.newbuy)
 
 module.exports = router;
 
 /**
  * @swagger
- * /buy/list:
+ * /buy:
  *   get:
  *     summary: show buy lists
  *     description: show buys by where predicate
@@ -78,7 +78,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /buy/newbuy:
+ * /buy:
  *   post:
  *     summary: update buy
  *     description: customer buy something
