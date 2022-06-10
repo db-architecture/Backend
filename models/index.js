@@ -60,5 +60,4 @@ Commute.associate(db);
 Event.associate(db);
 User.associate(db);
 
-
 module.exports = db;

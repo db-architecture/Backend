@@ -38,9 +38,9 @@ exports.getAllEvenetList = async(req,res)=>{
 };
 
 
-exports.deletEvent=async(req, res)=>{
+exports.deleteEvent=async(req, res)=>{
     const event_id = req.query.event_id;
-    Event.deletEvent(event_id,(err,data)=>{
+    Event.deleteEvent(event_id,(err,data)=>{
         if(err)
         res.status(500).send({
             message:

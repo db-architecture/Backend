@@ -1,6 +1,8 @@
 const model = require("../models");
+const sequelize = model.sequelize;
 //택배 코드:7
 const package_code = 7;
+const packageProfitCode = 2;
 
 const Package = function(pacakge){
     this.branch = pacakge.branch;
@@ -13,103 +15,59 @@ const Package = function(pacakge){
     this.s_name = pacakge.s_name;
     this.commision = pacakge.commision;
     this.package_price = pacakge.package_price;
-    this.pakage_type = pacakge.pakage_type;
+    this.package_type = pacakge.package_type;
+    this.branch_id = pacakge.branch_id;
 }
 
-Package.getAllPackageLsit = (type,branch, results) =>{
-    //지점명 있는 경우
-    if(branch != null){
-        model.Branch.findOne ({
+Package.getAllPackageLsit = (type,branch_id, results) =>{
+                //타입 있는 경우
+    if(type != null){
+        model.Code.findOne({
             raw:true,
-            where:{branch_name:branch},
-            attributes:['branch_id']
-        }).then(branch=>{
-            //타입 있는 경우
-            if(type != null){
-                model.Code.findOne({
-                    raw:true,
-                    where: {code:package_code,code_name:type},
-                    attributes: ['sec_code']
-                }).then(codeValue=>{
-                    model.Package.findAll({
-                        raw:true,
-                        where:{pakage_type:codeValue.sec_code, branch_id:branch.branch_id}
-                    }).then(result=>{
-                        console.log("get all package ("+type+"),("+branch+")");
-                        results(null,result);
-                    })
-                }).catch(err=>{
-                    console.log("err occuered while get all package (get code value) "+type+"),("+branch+")");
-                    results(err, null);
-                })
-            }
-            //타입 없는 경우
-            else{
-                model.Package.findAll({
-                    raw:true,
-                    where:{branch_id:branch.branch_id},
-                }).then(result=>{
-                    console.log("get all package ("+branch+")");
-                    results(null,result);
-                }).catch(err=>{
-                    console.log("err occuered while get all package (Package find All) ("+branch+")");
-                    results(err, null);
-                })
-            }
+            where: {code:package_code,code_name:type},
+            attributes: ['sec_code']
+        }).then(codeValue=>{
+            model.Package.findAll({
+                raw:true,
+                where:{pakage_type:codeValue.sec_code, branch_id:branch_id}
+            }).then(result=>{
+                console.log("get all package ("+type+"),("+branch_id+")");
+                results(null,result);
+            })
         }).catch(err=>{
-            console.log("err occured while get branch id ("+type+")");
+            console.log("err occuered while get all package (get code value) "+type+"),("+branch_id+")");
             results(err, null);
         })
     }
-    //지점명 없는 경우
+    //타입 없는 경우
     else{
-        //타입 있는 경우
-        if(type != null){
-            model.Code.findOne({
-                raw:true,
-                where: {code:package_code,code_name:type},
-                attributes: ['sec_code']
-            }).then(codeValue=>{
-                model.Package.findAll({
-                    raw:true,
-                    where:{pakage_type:codeValue.sec_code}
-                }).then(result=>{
-                    console.log("get all package ("+type+")")
-                    results(null,result);
-                })
-            }).catch(err=>{
-                console.log("err occuered while get all package (get code value) ("+type+")");
-                results(err, null);
-            })
-        }
-        //타입 없는 경우
-        else{
-            model.Package.findAll({
-                raw:true,
-            }).then(result=>{
-                console.log("get all package ("+branch+")");
-                results(null,result);
-            }).catch(err=>{
-                console.log("err occuered while get all package (Package find All)");
-                results(err, null);
-            })
-        }
-    }
-    
-}
-
-Package.registerNewPackage = (package, results) => {
-   model.Branch.findOne({
-       raw:true,
-       where: {branch_name:package.branch},
-       attributes:['branch_id']
-   }).then(branch=>{
-        model.Code.findOne({
+        model.Package.findAll({
             raw:true,
-            where: {code:package_code,code_name:package.pakage_type},
+            where:{branch_id:branch_id},
+        }).then(result=>{
+            console.log("get all package ("+branch_id+")");
+            results(null,result);
+        }).catch(err=>{
+            console.log("err occuered while get all package (Package find All) ("+branch_id+")");
+            results(err, null);
+        })
+    }
+};
+
+Package.registerNewPackage = async (package, results) => {
+    try {
+        const code = await model.Code.findOne({
+            raw:true,
+            where: {
+                code:package_code,
+                code_name:package.package_type
+            },
             attributes:['sec_code']
-        }).then(code => {
-            model.Package.create({
+        });
+        
+
+        await sequelize.transaction(async t => {
+            await model.Package.create({
                 weight : package.weight,
                 b_phone : package.b_phone,
                 b_address : package.b_address,
@@ -120,27 +78,40 @@ Package.registerNewPackage = (package, results) => {
                 commision : package.commision,
                 package_price : package.package_price,
                 pakage_type : code.sec_code,
-                branch_id : branch.branch_id
-            })
-            .then(result => 
-                {console.log("register package: ",{ ...package });
-                results(null,{ ...package })
-            })
-            .catch(err => 
-            {
-                console.log("err occured while register package " + err);
-                results(err,null);
+                branch_id : package.branch_id
             });
-          
-        }).catch(err => {
-            console.log("err occured while get package code " + err);
-            results(err,null);
-        })
-   }).catch(err=>{
-        console.log("err occured while get branch id " + err);
-        results(err,null);
-   })
-};
+            
+
+            const today = new Date();
+            let year = today.getFullYear();
+            let month = ('0' + (today.getMonth() + 1)).slice(-2);
+            let day = ('0' + today.getDate()).slice(-2);
+
+            let dateString = year + '-' + month  + '-' + day;
+
+            const data_arr = [{
+                date:dateString,
+                profit:package.package_price,
+                profitcode:packageProfitCode,
+            }];
+
+            await model.Profit.create({
+                time:data_arr[0].date,
+                day_profit:data_arr[0].profit,
+                profitcode:data_arr[0].profitcode,
+                branch_id:package.branch_id,
+            });
+
+
+        });
+    } catch(err) {
+        console.log("err occured while register package " + err);
+        return results(err,null);
+    }
+
+    console.log("register package: ",{ ...package });
+    return results(null,{ ...package });
+}
 
 
 module.exports = Package;

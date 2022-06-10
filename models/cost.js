@@ -21,6 +21,10 @@ module.exports = class Cost extends Sequelize.Model {
           type: Sequelize.DATE,
           allowNull:false,
         },
+        type_id : {
+          type: Sequelize.INTEGER,
+          allowNull: true,
+        }
     }, {
         sequelize,
         timestamps:true,

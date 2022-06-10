@@ -1,6 +1,6 @@
 const model = require("../models")
 const Sequelize = require('sequelize')
-const {sequelize} = require('../models/connection')
+const sequelize = model.sequelize;
 
 const Profit = ()=>{
 
@@ -46,30 +46,34 @@ Profit.findByCode_and_Date = (start,end,code,bi,sumcode,results) =>{
     }
 }
 
-Profit.update_profit = async(data_arr,bi,results) =>{
+Profit.update_profit = async (data_arr,bi,results) =>{
 
     try{
         let i;
-        for (i=0; i<data_arr.length; i++){
+        let result;
 
-            result = await model.Profit.create({
-                time:data_arr[i].date,
-                day_profit:data_arr[i].profit,
-                profitcode:data_arr[i].profitcode,
-                branch_id:bi,
-            })
+        await sequelize.transaction(async t => {
+            for (i=0; i<data_arr.length; i++){
 
-            if (result == null){
-                throw new {msg:"Create incomplete"}
+                result = await model.Profit.create({
+                    time:data_arr[i].date,
+                    day_profit:data_arr[i].profit,
+                    profitcode:data_arr[i].profitcode,
+                    branch_id:bi,
+                })
+    
+                if (result == null){
+                    throw new {msg:"Create incomplete"}
+                }
             }
-
-        }
-    }catch(err){
-        results(err,null)
-        console.log(err)
+        });
+        
+    } catch(err) {
+        console.log(err);
+        return results(err,null);
     }
 
-    results(null,{msg:"Create complete"})
+    return results(null,{msg:"Create complete"})
 }
 
 module.exports = Profit;
