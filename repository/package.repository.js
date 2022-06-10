@@ -1,4 +1,5 @@
 const model = require("../models");
+const sequelize = model.sequelize;
 //택배 코드:7
 const package_code = 7;
 
@@ -52,40 +53,40 @@ Package.getAllPackageLsit = (type,branch_id, results) =>{
     }
 };
 
-Package.registerNewPackage = (package, results) => {
-    model.Code.findOne({
-        raw:true,
-        where: {code:package_code,code_name:package.pakage_type},
-        attributes:['sec_code']
-    }).then(code => {
-        model.Package.create({
-            weight : package.weight,
-            b_phone : package.b_phone,
-            b_address : package.b_address,
-            b_name : package.b_name,
-            s_phone : package.s_phone,
-            s_address : package.s_address,
-            s_name : package.s_name,
-            commision : package.commision,
-            package_price : package.package_price,
-            pakage_type : code.sec_code,
-            branch_id : package.branch_id
-        })
-        .then(result => 
-            {console.log("register package: done");
-            results(null,{ ...package })
-        })
-        .catch(err => 
-        {
-            console.log("err occured while register package " + err);
-            results(err,null);
+Package.registerNewPackage = async (package, results) => {
+    try {
+        const code = await model.Code.findOne({
+            raw:true,
+            where: {
+                code:package_code,
+                code_name:package.pakage_type
+            },
+            attributes:['sec_code']
         });
-          
-    }).catch(err => {
-            console.log("err occured while get package code " + err);
-            results(err,null);
-    });
-};
+
+        await sequelize.transaction(async t => {
+            await model.Package.create({
+                weight : package.weight,
+                b_phone : package.b_phone,
+                b_address : package.b_address,
+                b_name : package.b_name,
+                s_phone : package.s_phone,
+                s_address : package.s_address,
+                s_name : package.s_name,
+                commision : package.commision,
+                package_price : package.package_price,
+                pakage_type : code.sec_code,
+                branch_id : branch.branch_id
+            });
+        });
+    } catch(err) {
+        console.log("err occured while register package " + err);
+        return results(err,null);
+    }
+
+    console.log("register package: ",{ ...package });
+    return results(null,{ ...package });
+}
 
 
 module.exports = Package;
