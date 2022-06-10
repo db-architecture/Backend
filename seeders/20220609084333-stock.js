@@ -50,6 +50,14 @@ module.exports = {
         expired_date: new Date('2024-10-27 10:20:30').toISOString().replace(/T/, ' ').replace(/\..+/, ''),
         createdAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
         updatedAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+       },
+       {
+        stuff_id:5,
+        branch_id:2,
+        stock_num: 2,
+        expired_date: new Date('2024-10-27 10:20:30').toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+        createdAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+        updatedAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
        }
     ],{})
   },

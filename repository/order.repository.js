@@ -103,7 +103,7 @@ Order.findAllNeccesaryOrder = (branch_id, results) => {
             },
             branch_id: branch_id,
         },
-        //attributes:['']
+        attributes: ['stock_id', 'stock_num', 'expired_date', 'stuff_id','branch_id']
     })
     .then(result => {
         console.log("find All Neccesary Orders");
