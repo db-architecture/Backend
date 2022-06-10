@@ -135,7 +135,7 @@ Event.getAllEvenetList = (event_type,stuff_name,results)=>{
     }
 }
 
-Event.deletEvent = (event_id, results) => {
+Event.deleteEvent = (event_id, results) => {
     model.Event.destroy({
         where:{id:event_id}
     }).then(result=>{

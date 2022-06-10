@@ -11,6 +11,7 @@ const authority = require('../middleware/authorityCheck');
 const commuteRoute = require('./commute.controller');
 const buyRoute = require('./buy.controller');
 const stuffRoute = require('./stuff.controller');
+const stockRoute = require('./stock.controller')
 
 const router = express.Router();
 
@@ -60,6 +61,10 @@ const authority_employer = [
   {
     path: '/event',
     route: eventRoute,
+  },
+  {
+    path: '/stock',
+    route: stockRoute,
   },
 ]
 

@@ -3,19 +3,19 @@ const event = require("../../service/event.service.js");
 const router = express.Router();
 
 // event list retrive
-router.get("/list",event.getAllEvenetList);
+router.get("/",event.getAllEvenetList);
 
 // regist new event
 router.post("/",event.registerNewEvent);
 
 // delete new event
-router.delete("/",event.deletEvent);
+router.delete("/",event.deleteEvent);
 
 module.exports = router;
 
 /**
  * @swagger
- * /event/list:
+ * /event:
  *   get:
  *     summary: show event list
  *     description: show event list
