@@ -136,14 +136,14 @@ Event.getAllEvenetList = (event_type,stuff_name,results)=>{
     }
 }
 
-Event.deletEvent = async (event_id, results) => {
-    try {
-        await sequelize.transaction(async t => {
-            await model.Event.destroy({
-                where:{id:event_id}
-            });
-        })
-    } catch(err) {
+
+Event.deleteEvent = (event_id, results) => {
+    model.Event.destroy({
+        where:{id:event_id}
+    }).then(result=>{
+        console.log("delte event...done")
+        results(null,202)
+    }).catch(err=>{
         console.log("err occured while deleting event");
         return results(err,null);
     }

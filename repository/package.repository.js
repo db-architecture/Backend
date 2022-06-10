@@ -15,98 +15,46 @@ const Package = function(pacakge){
     this.commision = pacakge.commision;
     this.package_price = pacakge.package_price;
     this.pakage_type = pacakge.pakage_type;
+    this.branch_id = pacakge.branch_id;
 }
 
-Package.getAllPackageLsit = (type,branch, results) =>{
-    //지점명 있는 경우
-    if(branch != null){
-        model.Branch.findOne ({
+Package.getAllPackageLsit = (type,branch_id, results) =>{
+                //타입 있는 경우
+    if(type != null){
+        model.Code.findOne({
             raw:true,
-            where:{branch_name:branch},
-            attributes:['branch_id']
-        }).then(branch=>{
-            //타입 있는 경우
-            if(type != null){
-                model.Code.findOne({
-                    raw:true,
-                    where: {code:package_code,code_name:type},
-                    attributes: ['sec_code']
-                }).then(codeValue=>{
-                    model.Package.findAll({
-                        raw:true,
-                        where:{pakage_type:codeValue.sec_code, branch_id:branch.branch_id}
-                    }).then(result=>{
-                        console.log("get all package ("+type+"),("+branch+")");
-                        results(null,result);
-                    })
-                }).catch(err=>{
-                    console.log("err occuered while get all package (get code value) "+type+"),("+branch+")");
-                    results(err, null);
-                })
-            }
-            //타입 없는 경우
-            else{
-                model.Package.findAll({
-                    raw:true,
-                    where:{branch_id:branch.branch_id},
-                }).then(result=>{
-                    console.log("get all package ("+branch+")");
-                    results(null,result);
-                }).catch(err=>{
-                    console.log("err occuered while get all package (Package find All) ("+branch+")");
-                    results(err, null);
-                })
-            }
+            where: {code:package_code,code_name:type},
+            attributes: ['sec_code']
+        }).then(codeValue=>{
+            model.Package.findAll({
+                raw:true,
+                where:{pakage_type:codeValue.sec_code, branch_id:branch_id}
+            }).then(result=>{
+                console.log("get all package ("+type+"),("+branch_id+")");
+                results(null,result);
+            })
         }).catch(err=>{
-            console.log("err occured while get branch id ("+type+")");
+            console.log("err occuered while get all package (get code value) "+type+"),("+branch_id+")");
             results(err, null);
         })
     }
-    //지점명 없는 경우
+    //타입 없는 경우
     else{
-        //타입 있는 경우
-        if(type != null){
-            model.Code.findOne({
-                raw:true,
-                where: {code:package_code,code_name:type},
-                attributes: ['sec_code']
-            }).then(codeValue=>{
-                model.Package.findAll({
-                    raw:true,
-                    where:{pakage_type:codeValue.sec_code}
-                }).then(result=>{
-                    console.log("get all package ("+type+")")
-                    results(null,result);
-                })
-            }).catch(err=>{
-                console.log("err occuered while get all package (get code value) ("+type+")");
-                results(err, null);
-            })
-        }
-        //타입 없는 경우
-        else{
-            model.Package.findAll({
-                raw:true,
-            }).then(result=>{
-                console.log("get all package ("+branch+")");
-                results(null,result);
-            }).catch(err=>{
-                console.log("err occuered while get all package (Package find All)");
-                results(err, null);
-            })
-        }
+        model.Package.findAll({
+            raw:true,
+            where:{branch_id:branch_id},
+        }).then(result=>{
+            console.log("get all package ("+branch_id+")");
+            results(null,result);
+        }).catch(err=>{
+            console.log("err occuered while get all package (Package find All) ("+branch_id+")");
+            results(err, null);
+        })
     }
-    
-}
+};
 
 Package.registerNewPackage = async (package, results) => {
     try {
-        const branch = await model.Branch.findOne({
-            raw:true,
-            where: {branch_name:package.branch},
-            attributes:['branch_id']
-        });
-    
         const code = await model.Code.findOne({
             raw:true,
             where: {

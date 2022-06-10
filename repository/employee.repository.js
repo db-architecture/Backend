@@ -11,7 +11,7 @@ Emp.emp_list = (bi,results)=>{
         where:{
             branch_id:bi
         },
-        attributes:['employee_name','employee_phone','salary'],
+        attributes:['employee_id','employee_name','employee_phone','salary'],
     }).then(result=>{
         results(null,result)
     }).catch(err=>{
@@ -20,7 +20,7 @@ Emp.emp_list = (bi,results)=>{
     })
 }
 
-Emp.emp_create = (bi,en,ph,sa,results) =>{
+Emp.emp_create = (bi,en,ph,sa,id,pw,results) =>{
     model.Employee.create({
         employee_name: en,
         employee_phone: ph,
@@ -30,7 +30,19 @@ Emp.emp_create = (bi,en,ph,sa,results) =>{
         if (result == null){
             throw new {msg:"Create incomplete"}
         }
-        results(null,{msg:"Create complete"})
+
+        model.User.create({
+            user_id: id,
+            user_name: en,
+            user_pw: pw,
+            type: 1
+        }).then(result=>{
+            results(null,"Create complete")
+        }).catch(err=>{
+            console.log(err)
+            results(err,null)
+        })
+
     }).catch(err=>{
         results(err,null)
         console.log(err)
