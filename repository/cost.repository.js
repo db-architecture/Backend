@@ -47,72 +47,72 @@ Cost.findByCode_and_Date = (start,end,code,bi,sumcode,results)=>{
 Cost.update_cost= async(data_arr,bi,results) =>{
 
     try{
-        let i;
-        for (i=0; i<data_arr.length; i++){
-            let c = data_arr[i].costcode;
-            let cost = data_arr[i].cost_size;
+        await sequelize.transaction(async(t)=>{
+            let i;
+            for (i=0; i<data_arr.length; i++){
+                let c = data_arr[i].costcode;
+                let cost = data_arr[i].cost_size;
 
-            if (c == 6){
-                temp = await model.Buy.findOne({
-                    raw:true,
-                    where:{
-                        buy_id: data_arr[i].buy_id,
-                        branch_id: bi,
+                if (c == 6){
+                    stuffs = await model.Stock.findOne({
+                        where:{
+                            stock_id: data_arr[i].stock_id,
+                        },
+                        attributes: ['stuff_id']
+                    })
+
+                    price = await model.Stuff.findOne({
+                        where: {stuff_id: stuffs.stuff_id},
+                        attributes:['first_cost']
+                    })
+
+                    cost = (data_arr[i].stock_num)*(price.first_cost);
+
+                    stat = await model.Stock.increment({
+                        stock_num: data_arr[i].stock_num,
+                    },{
+                        where: {
+                            stock_id: data_arr[i].stock_id,
+                        },
+                    });
+                }
+                else if (c == 7){
+                    temp = await model.Stock.findAll({
+                        raw:true,
+                        where:{
+                            stock_id: data_arr[i].stock_id,
+                            branch_id: bi,
+                        }
+                    })
+
+                    if (temp == null){
+                        throw "stockid is not exist or that stockid does not exist in your branch"
                     }
-                })
 
-                if (temp == null){
-                    throw "buyid is not exist or that buyid does not exist in your branch"
+                    fc = await model.Stuff.findByPk(temp[0].stuff_id);
+                    cost = (fc.first_cost)*(temp.stock_num);
+                    temp = await model.Stock.update({
+                        stock_num: 0,
+                    },{
+                        where:{
+                            stock_id: data_arr[i].stock_id,
+                        }
+                    })
                 }
 
-                cost = temp.price;
-                stockid = temp.stock_id;
-                num = temp.buy_num;
-
-                stat = await model.Stock.increment({
-                    stock_num: num,
-                },{
-                    where: {
-                        stock_id: stockid,
-                    },
-                });
-            }
-            else if (c == 7){
-                temp = await model.Stock.findAll({
-                    raw:true,
-                    where:{
-                        stock_id: data_arr[i].stock_id,
-                        branch_id: bi,
-                    }
+                result = await model.Cost.create({
+                    costcode:c,
+                    cost_size:cost,
+                    time:data_arr[i].time,
+                    branch_id: bi
                 })
 
-                if (temp == null){
-                    throw "stockid is not exist or that stockid does not exist in your branch"
+
+                if (result == null){
+                    throw "Cost Create incomplete"
                 }
-
-                fc = await model.Stuff.findByPk(temp.stuff_id);
-                cost = (fc.first_cost)*(temp.stock_num);
-                temp = await model.Stock.update({
-                    stock_num: 0,
-                },{
-                    where:{
-                        stock_id: data_arr[i].stock_id,
-                    }
-                })
             }
-
-            result = await model.Cost.create({
-                costcode:c,
-                cost_size:cost,
-                time:data_arr[i].time,
-                branch_id: bi
-            })
-
-
-            if (result == null){
-                throw "Cost Create incomplete"
-            }
-        }
+        })
     }catch(err){
         results(err,null)
         console.log(err)

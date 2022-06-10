@@ -82,7 +82,6 @@ module.exports = router;
  *               type: array
  *               items:
  *                  type: object
- *                  required: date,profit,profitcode
  *                  properties:
  *                      time:
  *                          type: date
@@ -90,10 +89,10 @@ module.exports = router;
  *                          type: integer
  *                      costcode:
  *                          type: integer
- *                      buy_id:
+ *                      stock_id:
  *                          type: integer
  *                          nullable: true
- *                      stock_id:
+ *                      stock_num:
  *                          type: integer
  *                          nullable: true
  *               example:
@@ -105,7 +104,8 @@ module.exports = router;
  *                   costcode: 2
  *                 - time: 2022-01-01
  *                   costcode: 6
- *                   buy_id: 1
+ *                   stock_id: 1
+ *                   stock_num: 2
  *                 - time: 2022-01-01
  *                   costcode: 7
  *                   stock_id: 1
