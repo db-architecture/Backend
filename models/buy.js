@@ -46,6 +46,6 @@ module.exports = class Buy extends Sequelize.Model {
   
     static associate(db) {
       db.Buy.belongsTo(db.Branch,{foreignKey:'branch_id'});
-      db.Buy.belongsTo(db.Stock,{foreignKey:'stock_id'});
+      db.Buy.belongsTo(db.Stock,{foreignKey:'stuff_id'});
     }
   };
