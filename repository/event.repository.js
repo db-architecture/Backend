@@ -148,8 +148,6 @@ Event.deleteEvent = (event_id, results) => {
         return results(err,null);
     });
 
-    console.log("delte event...done")
-    results(null,202);
 }
 
 module.exports = Event;
