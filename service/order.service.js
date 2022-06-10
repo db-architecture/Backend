@@ -53,7 +53,6 @@ exports.deleteOrder = (req, res) => {
             message: "Unauthorized"
           });
     } else {
-        console.log(req.params.order_id, req.user.branch_id);
         order.deleteOrder(req.params.order_id, req.user.branch_id, (err, results) => {
             if(err) {
                 res.status(400).send({
