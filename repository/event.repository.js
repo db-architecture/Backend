@@ -146,7 +146,7 @@ Event.deleteEvent = (event_id, results) => {
     }).catch(err=>{
         console.log("err occured while deleting event");
         return results(err,null);
-    }
+    });
 
     console.log("delte event...done")
     results(null,202);

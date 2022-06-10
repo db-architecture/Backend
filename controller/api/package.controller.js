@@ -97,7 +97,7 @@ module.exports = router;
  *           application/json:
  *             schema:
  *               type: object
- *               required: weight,b_phone,b_address,b_name,s_phone,s_address,s_name,commision,package_price,pakage_type
+ *               required: weight,b_phone,b_address,b_name,s_phone,s_address,s_name,commision,package_price,package_type
  *               properties:
  *                  branch:
  *                      type: string
@@ -119,7 +119,7 @@ module.exports = router;
  *                      type: string
  *                  package_price:
  *                      type: string
- *                  pakage_type:
+ *                  package_type:
  *                      type: string
  * 
  * 
@@ -134,7 +134,7 @@ module.exports = router;
  *                 s_name : "김영희"
  *                 commision : "0"
  *                 package_price : "2500"
- *                 pakage_type : "반값택배"
+ *                 package_type : "반값택배"
  * 
  * 
  *     responses:
@@ -177,7 +177,7 @@ module.exports = router;
  *                 s_name : "김영희"
  *                 commision : "0"
  *                 package_price : "2500"
- *                 pakage_type : "반값택배"
+ *                 package_type : "반값택배"
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":

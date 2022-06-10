@@ -2,6 +2,7 @@ const model = require("../models");
 const sequelize = model.sequelize;
 //택배 코드:7
 const package_code = 7;
+const packageProfitCode = 2;
 
 const Package = function(pacakge){
     this.branch = pacakge.branch;
@@ -14,7 +15,7 @@ const Package = function(pacakge){
     this.s_name = pacakge.s_name;
     this.commision = pacakge.commision;
     this.package_price = pacakge.package_price;
-    this.pakage_type = pacakge.pakage_type;
+    this.package_type = pacakge.package_type;
     this.branch_id = pacakge.branch_id;
 }
 
@@ -59,10 +60,11 @@ Package.registerNewPackage = async (package, results) => {
             raw:true,
             where: {
                 code:package_code,
-                code_name:package.pakage_type
+                code_name:package.package_type
             },
             attributes:['sec_code']
         });
+        
 
         await sequelize.transaction(async t => {
             await model.Package.create({
@@ -76,8 +78,31 @@ Package.registerNewPackage = async (package, results) => {
                 commision : package.commision,
                 package_price : package.package_price,
                 pakage_type : code.sec_code,
-                branch_id : branch.branch_id
+                branch_id : package.branch_id
             });
+            
+
+            const today = new Date();
+            let year = today.getFullYear();
+            let month = ('0' + (today.getMonth() + 1)).slice(-2);
+            let day = ('0' + today.getDate()).slice(-2);
+
+            let dateString = year + '-' + month  + '-' + day;
+
+            const data_arr = [{
+                date:dateString,
+                profit:package.package_price,
+                profitcode:packageProfitCode,
+            }];
+
+            await model.Profit.create({
+                time:data_arr[0].date,
+                day_profit:data_arr[0].profit,
+                profitcode:data_arr[0].profitcode,
+                branch_id:package.branch_id,
+            });
+
+
         });
     } catch(err) {
         console.log("err occured while register package " + err);
