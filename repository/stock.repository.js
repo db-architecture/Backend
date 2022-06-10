@@ -74,7 +74,7 @@ Stock.addItem = async(newStock, results)=>{
 
     console.log("register stock: ",{...result})
 
-    return results(null,{...result});
+    return results(null,{msg:"Add complete"});
 }
 
 
