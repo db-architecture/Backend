@@ -12,7 +12,6 @@ module.exports = class Stuff extends Sequelize.Model {
         stuff_name:{
           type:Sequelize.STRING(40),
           allowNull:false,
-          primaryKey: true,
         },
         stuffcode:{
           type:Sequelize.INTEGER,
@@ -53,5 +52,6 @@ module.exports = class Stuff extends Sequelize.Model {
       db.Stuff.hasMany(db.Stock,{foreignKey:'stuff_id',onDelete:'CASCADE'});
       db.Stuff.hasMany(db.Order,{foreignKey:'stuff_id',onDelete:'CASCADE'});
       db.Stuff.hasMany(db.Event,{foreignKey:'stuff_id',onDelete:'CASCADE'});
+      db.Stuff.hasMany(db.Buy,{foreignKey:'stuff_id',onDelete:'CASCADE'});
     }
   };

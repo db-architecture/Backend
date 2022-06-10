@@ -1,5 +1,6 @@
 const model = require("../models")
 const Sequelize = require('sequelize')
+const {sequelize} = require('../models/connection')
 
 const Buy = ()=>{}
 
@@ -90,12 +91,11 @@ Buy.update_buy= async(data_arr,bi,results) =>{
                 sumall = data_arr[iter].buy_num;
             }
 
-            let price = await model.Stuff.findOne({
-                raw:true,
+            console.log(data_arr[iter].stuff_id)
+            price = await model.Stuff.findOne({
                 where:{
-                    stuff_id: data_arr[iter].stuff_id,
-                },
-                attributes:['fixed_price'],
+                    stuff_id: data_arr[iter].stuff_id
+                }
             })
 
             let p = price.fixed_price;
@@ -120,76 +120,63 @@ Buy.update_buy= async(data_arr,bi,results) =>{
                     i+=1
                 }
             }
-            // temp = await model.Event.findOne({
-            //     raw:true,
-            //     where:{
-            //         stuff_id: temp1.stuff_id,
-            //     },
-            //     attributes:['eventcode','disprice'],
-            // })
 
-            // let ec = temp.eventcode;
-            // let price = 0;
+            temp = await model.Event.findOne({
+                raw:true,
+                where:{
+                    stuff_id: temp1.stuff_id,
+                },
+                attributes:['eventcode','disprice'],
+            })
 
-            // if (ec == 4){
-            //     price = temp.disprice;
-            // }
-            // else{
-            //     price = await model.Stuff.findOne({
-            //         raw:true,
-            //         where:{
-            //             stuff_id: temp1.stuff_id,
-            //         },
-            //         attributes:['fixed_price'],
-            //     })
-            // }
+            let ec = temp.eventcode;
+            let n = data_arr[i].buy_num;
 
-            // let n = data_arr[i].buy_num;
+            if (ec == 4){
+                p = temp.disprice;
+            }
 
-            // if (ec == 1){
-            //     n = int(n/2)+(n%2);
-            //     price *= n;
-            // }
-            // else if (ec == 2){
-            //     n = int(n/3)+(n%3);
-            //     price *= n;
-            // }
-            // else if (ec == 3){
-            //     price = (int(n/4)*temp.disprice)+((n%4)*price);
-            // }
-            // else{
-            //     price = (data_arr[i].buy_num*price);
-            // }
+            if (ec == 1){
+                n = int(n/2)+(n%2);
+                p *= n;
+            }
+            else if (ec == 2){
+                n = int(n/3)+(n%3);
+                p *= n;
+            }
+            else if (ec == 3){
+                p = (int(n/4)*temp.disprice)+((n%4)*p);
+            }
+            else{
+                p = (data_arr[i].buy_num*p);
+            }
 
-            let j=0
-            while (j<stock_arr.length){
-                result = await model.Buy.create({
-                    stock_id: stock_arr[j].stock_id,
-                    buy_num: stock_arr[j].stock_num,
-                    buycode: data_arr[iter].buycode,
-                    age: data_arr[iter].age,
-                    sex: data_arr[iter].sex,
-                    price: p*(stock_arr[j].stock_num),
-                    time: data_arr[iter].time,
-                    branch_id: bi,
-                })
+            console.log(p)
 
-                if (result == null){
-                    throw "Buy Create incomplete"
-                }
+            result = await model.Buy.create({
+                stuff_id: data_arr[iter].stuff_id,
+                buy_num: data_arr[iter].buy_num,
+                buycode: data_arr[iter].buycode,
+                age: data_arr[iter].age,
+                sex: data_arr[iter].sex,
+                price: p,
+                time: data_arr[iter].time,
+                branch_id: bi,
+            })
 
-                result = await model.Profit.create({
-                    time:data_arr[iter].time,
-                    day_profit:p*(stock_arr[j].stock_num),
-                    profitcode:1,
-                    branch_id:bi,
-                })
+            if (result == null){
+                throw "Buy Create incomplete"
+            }
 
-                if (result == null){
-                    throw "Profit Create incomplete"
-                }
+            result = await model.Profit.create({
+                time:data_arr[iter].time,
+                day_profit:p,
+                profitcode:1,
+                branch_id:bi,
+            })
 
-                j+=1;
+            if (result == null){
+                throw "Profit Create incomplete"
             }
 
             j=0
@@ -213,7 +200,7 @@ Buy.update_buy= async(data_arr,bi,results) =>{
 
         }
 
-        results(null,{msg:"Create complete"});
+        results(null,"Create complete");
 
     }catch(err){
         console.log(err)

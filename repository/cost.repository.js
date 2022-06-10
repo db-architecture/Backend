@@ -1,5 +1,6 @@
 const model = require("../models")
 const Sequelize = require('sequelize')
+const {sequelize} = require('../models/connection')
 
 const Cost = ()=>{}
 
