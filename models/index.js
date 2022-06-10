@@ -60,5 +60,6 @@ Commute.associate(db);
 Event.associate(db);
 User.associate(db);
 
+db.sequelize = sequelize;
 
 module.exports = db;

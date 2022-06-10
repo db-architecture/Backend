@@ -1,4 +1,5 @@
 const model = require("../models");
+const sequelize = model.sequelize;
 //이벤트 코드:7
 const event_code = 5;
 
@@ -135,18 +136,20 @@ Event.getAllEvenetList = (event_type,stuff_name,results)=>{
     }
 }
 
-Event.deletEvent = (event_id, results) => {
-    model.Event.destroy({
-        where:{id:event_id}
-    }).then(result=>{
-        console.log("delte event...done")
-        results(null,202)
-
-    }).catch(err=>{
+Event.deletEvent = async (event_id, results) => {
+    try {
+        await sequelize.transaction(async t => {
+            await model.Event.destroy({
+                where:{id:event_id}
+            });
+        })
+    } catch(err) {
         console.log("err occured while deleting event");
-        results(err,null);
-    })
+        return results(err,null);
+    }
 
+    console.log("delte event...done")
+    results(null,202);
 }
 
 module.exports = Event;

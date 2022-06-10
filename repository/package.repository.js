@@ -1,4 +1,5 @@
 const model = require("../models");
+const sequelize = model.sequelize;
 //택배 코드:7
 const package_code = 7;
 
@@ -98,18 +99,25 @@ Package.getAllPackageLsit = (type,branch, results) =>{
     
 }
 
-Package.registerNewPackage = (package, results) => {
-   model.Branch.findOne({
-       raw:true,
-       where: {branch_name:package.branch},
-       attributes:['branch_id']
-   }).then(branch=>{
-        model.Code.findOne({
+Package.registerNewPackage = async (package, results) => {
+    try {
+        const branch = await model.Branch.findOne({
             raw:true,
-            where: {code:package_code,code_name:package.pakage_type},
+            where: {branch_name:package.branch},
+            attributes:['branch_id']
+        });
+    
+        const code = await model.Code.findOne({
+            raw:true,
+            where: {
+                code:package_code,
+                code_name:package.pakage_type
+            },
             attributes:['sec_code']
-        }).then(code => {
-            model.Package.create({
+        });
+
+        await sequelize.transaction(async t => {
+            await model.Package.create({
                 weight : package.weight,
                 b_phone : package.b_phone,
                 b_address : package.b_address,
@@ -121,26 +129,16 @@ Package.registerNewPackage = (package, results) => {
                 package_price : package.package_price,
                 pakage_type : code.sec_code,
                 branch_id : branch.branch_id
-            })
-            .then(result => 
-                {console.log("register package: ",{ ...package });
-                results(null,{ ...package })
-            })
-            .catch(err => 
-            {
-                console.log("err occured while register package " + err);
-                results(err,null);
             });
-          
-        }).catch(err => {
-            console.log("err occured while get package code " + err);
-            results(err,null);
-        })
-   }).catch(err=>{
-        console.log("err occured while get branch id " + err);
-        results(err,null);
-   })
-};
+        });
+    } catch(err) {
+        console.log("err occured while register package " + err);
+        return results(err,null);
+    }
+
+    console.log("register package: ",{ ...package });
+    return results(null,{ ...package });
+}
 
 
 module.exports = Package;
