@@ -66,10 +66,6 @@ const authority_employer = [
     path: '/stock',
     route: stockRoute,
   },
-  {
-    path: '/stock',
-    route: stockRoute,
-  },
 ]
 
 const devRoutes = [
