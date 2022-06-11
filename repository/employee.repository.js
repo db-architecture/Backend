@@ -71,21 +71,44 @@ Emp.emp_update = (en,bi,sa,results) =>{
     })
 }
 
-Emp.emp_del = (en,bi,results) =>{
-    model.Employee.destroy({
-        where:{
-            employee_name:en,
-            branch_id:bi,
-        }
-    }).then(result=>{
-        if (result == null){
-            throw new {msg:"Delete incomplete"}
-        }
-        results(null,{msg:"Delete complete"})
-    }).catch(err=>{
+Emp.emp_del = async (en,bi,results) =>{
+    try{
+        await sequelize.transaction(async (t)=>{
+            who = await model.Employee.findOne({
+                where:{
+                    employee_name:en,
+                    branch_id:bi,
+                },
+                attributes:['employee_id']
+            })
+
+            result = await model.Employee.destroy({
+                where:{
+                    employee_name:en,
+                    branch_id:bi,
+                }
+            })
+            
+            if (result == null){
+                throw "Delete incomplete"
+            }
+
+            result = await model.User.destroy({
+                where:{
+                    employee_id: who.employee_id
+                }
+            })
+
+            if (result == null){
+                throw "Delete incomplete"
+            }
+
+            results(null,"Delete complete")
+        })
+    }catch(err){
         results(err,null)
         console.log(err)
-    })
+    }
 }
 
 module.exports = Emp;

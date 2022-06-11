@@ -15,7 +15,7 @@ module.exports = class Stock extends Sequelize.Model {
         },
         expired_date:{
           type:Sequelize.DATE,
-          allowNull:false,
+          allowNull:true,
           defaultValue:Sequelize.literal('now()'),
         },
     }, {
