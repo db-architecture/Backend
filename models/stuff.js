@@ -51,7 +51,7 @@ module.exports = class Stuff extends Sequelize.Model {
     static associate(db) {
       db.Stuff.hasMany(db.Stock,{foreignKey:'stuff_id',onDelete:'CASCADE'});
       db.Stuff.hasMany(db.Order,{foreignKey:'stuff_id',onDelete:'CASCADE'});
-      db.Stuff.hasMany(db.Event,{foreignKey:'stuff_id',onDelete:'CASCADE'});
+      db.Stuff.hasOne(db.Event,{foreignKey:'stuff_id',onDelete:'CASCADE'});
       db.Stuff.hasMany(db.Buy,{foreignKey:'stuff_id',onDelete:'CASCADE'});
     }
   };
