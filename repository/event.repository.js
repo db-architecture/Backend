@@ -12,42 +12,56 @@ const Event = function(event){
     this.event_type = event.event_type;
 };
 
-Event.registerNewEvent = (event, results)=>{
-    model.Stuff.findOne({
-        raw:true,
-        where:{stuff_name:event.stuff_name},
-        attributes:['stuff_id']
-    }).then(stuff_id=>{
-        model.Code.findOne({
+Event.registerNewEvent = async(event, results)=>{
+    try{
+        res = await model.Event.findAll({
             raw:true,
-            where: {code:event_code, code_name:event.event_type},
-            attributes: ['sec_code']
-        }).then(event_code_result=>{
-            model.Event.create({
-                stuff_id:stuff_id.stuff_id,
-                disprice:event.disprice,
-                disrate:event.disrate,
-                startdate:event.startdate,
-                enddate:event.enddate,
-                eventcode:event_code_result.sec_code,
-                stuff_name:event.stuff_name
-            }).then(result=>{
-                console.log("register new event done")
-                results(null,event)
+            where:{stuff_name:event.stuff_name},
+            attributes:['stuff_id']
+        })
+
+        if(res.length>1){
+            throw "already event!"
+        }
+        model.Stuff.findAll({
+            raw:true,
+            where:{stuff_name:event.stuff_name},
+            attributes:['stuff_id']
+        }).then(stuff_id=>{
+            model.Code.findOne({
+                raw:true,
+                where: {code:event_code, code_name:event.event_type},
+                attributes: ['sec_code']
+            }).then(event_code_result=>{
+                model.Event.create({
+                    stuff_id:stuff_id[0].stuff_id,
+                    disprice:event.disprice,
+                    disrate:event.disrate,
+                    startdate:event.startdate,
+                    enddate:event.enddate,
+                    eventcode:event_code_result.sec_code,
+                    stuff_name:event.stuff_name
+                }).then(result=>{
+                    console.log("register new event done")
+                    results(null,event)
+                }).catch(err=>{
+                    console.log("err ocuured while creating event")
+                    results(err,null)
+                })
+
             }).catch(err=>{
-                console.log("err ocuured while creating event")
-                results(err,null)
+                console.log("err ocuured while getting event_code")
+                results(err,null);
             })
 
         }).catch(err=>{
-            console.log("err ocuured while getting event_code")
+            console.log("err ocuured while getting stuff_id")
             results(err,null);
         })
-
-    }).catch(err=>{
-        console.log("err ocuured while getting stuff_id")
-        results(err,null);
-    })
+    }catch(err){
+        console.log(err)
+        results(err,null)
+    }
 }
 
 

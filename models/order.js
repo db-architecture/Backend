@@ -17,7 +17,7 @@ module.exports = class Order extends Sequelize.Model {
           type: Sequelize.INTEGER,
           allowNull:false,
         },
-        time:{
+        order_date:{
           type: Sequelize.DATE,
           allowNull:false,
         },

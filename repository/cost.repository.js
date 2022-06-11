@@ -6,7 +6,7 @@ const Cost = ()=>{}
 
 Cost.findByCode_and_Date = (start,end,code,bi,sumcode,results)=>{
     let where = {
-        time:{
+        cost_date:{
             [Sequelize.Op.gte]:start,
             [Sequelize.Op.lte]:end
         },
@@ -21,7 +21,7 @@ Cost.findByCode_and_Date = (start,end,code,bi,sumcode,results)=>{
         model.Cost.findAll({
             raw:true,
             where: where,
-            attributes:['time','cost_size','costcode'],
+            attributes:['cost_date','cost','costcode'],
         }).then(result=>{
             results(null,result)
         }).catch(err=>{
@@ -33,7 +33,7 @@ Cost.findByCode_and_Date = (start,end,code,bi,sumcode,results)=>{
         model.Cost.findAll({
             raw:true,
             where: where,
-            attributes:[[Sequelize.fn('sum', Sequelize.col('cost_size')), 'sumCost']],
+            attributes:[[Sequelize.fn('sum', Sequelize.col('cost')), 'sumCost']],
         }).then(result=>{
             results(null,result)
         }).catch(err=>{
@@ -90,7 +90,8 @@ Cost.update_cost= async(data_arr,bi,results) =>{
                     }
 
                     fc = await model.Stuff.findByPk(temp[0].stuff_id);
-                    cost = (fc.first_cost)*(temp.stock_num);
+                    cost = (fc.first_cost)*(temp[0].stock_num);
+                    console.log(cost)
                     temp = await model.Stock.update({
                         stock_num: 0,
                     },{
@@ -102,8 +103,8 @@ Cost.update_cost= async(data_arr,bi,results) =>{
 
                 result = await model.Cost.create({
                     costcode:c,
-                    cost_size:cost,
-                    time:data_arr[i].time,
+                    cost:cost,
+                    cost_date:data_arr[i].time,
                     branch_id: bi
                 })
 

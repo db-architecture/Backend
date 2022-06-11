@@ -104,6 +104,11 @@ module.exports = {
         updatedAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
       },
       {
+        code: 3, sec_code: 8, code_name: '수수료',
+        createdAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+        updatedAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+      },
+      {
         code: 4, sec_code: 1, code_name: '물건판매',
         createdAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
         updatedAt: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),

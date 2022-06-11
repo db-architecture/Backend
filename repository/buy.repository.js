@@ -7,7 +7,7 @@ const Buy = ()=>{}
 Buy.findByCode_and_Date = (start,end,code,age,sex,bi,sumcode,results)=>{
 
     let where = {
-        time:{
+        buy_date:{
             [Sequelize.Op.gte]:start,
             [Sequelize.Op.lte]:end
         },
@@ -30,7 +30,7 @@ Buy.findByCode_and_Date = (start,end,code,age,sex,bi,sumcode,results)=>{
         model.Buy.findAll({
             raw: true,
             where: where,
-            attributes: ['stuff_id','time','buycode','price','buy_num'],
+            attributes: ['stuff_id','buy_date','buycode','price','buy_num'],
         }).then(result=>{
             results(null,result)
         }).catch(err=>{
@@ -160,7 +160,7 @@ Buy.update_buy= async(data_arr,bi,results) =>{
                     age: data_arr[iter].age,
                     sex: data_arr[iter].sex,
                     price: p,
-                    time: data_arr[iter].time,
+                    buy_date: data_arr[iter].time,
                     branch_id: bi,
                 },{transaction:t})
     
@@ -169,8 +169,8 @@ Buy.update_buy= async(data_arr,bi,results) =>{
                 }
     
                 result = await model.Profit.create({
-                    time:data_arr[iter].time,
-                    day_profit:p,
+                    profit_date:data_arr[iter].time,
+                    profit:p,
                     profitcode:1,
                     branch_id:bi,
                 },{transaction:t})

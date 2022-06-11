@@ -28,7 +28,8 @@ Stock.getAllList = async(newStock, results) => {
             where:{stuff_name:newStock.stuff_name},
             attributes:['stuff_id'],
         }).then(stuff=>{
-            model.Stuff.findAll({
+            console.log(stuff,newStock.branch_id)
+            model.Stock.findAll({
                 raw:true,
                 where:{branch_id:newStock.branch_id, stuff_id:stuff.stuff_id},
             }).then(result=>{

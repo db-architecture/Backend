@@ -9,7 +9,7 @@ const Profit = ()=>{
 Profit.findByCode_and_Date = (start,end,code,bi,sumcode,results) =>{
 
     let where = {
-        time:{
+        profit_date:{
             [Sequelize.Op.gte]: start,
             [Sequelize.Op.lte]: end,
         },
@@ -24,7 +24,7 @@ Profit.findByCode_and_Date = (start,end,code,bi,sumcode,results) =>{
         model.Profit.findAll({
             raw:true,
             where:where,
-            attributes:['time','day_profit','profitcode'],
+            attributes:['profit_date','profit','profitcode'],
         }).then(result=>{
             results(null,result)
         }).catch(err=>{
@@ -36,7 +36,7 @@ Profit.findByCode_and_Date = (start,end,code,bi,sumcode,results) =>{
         model.Profit.findAll({
             raw:true,
             where:where,
-            attributes:[[Sequelize.fn('sum', Sequelize.col('day_profit')), 'sumProfit']],
+            attributes:[[Sequelize.fn('sum', Sequelize.col('profit')), 'sumProfit']],
         }).then(result=>{
             results(null,result)
         }).catch(err=>{
@@ -56,8 +56,8 @@ Profit.update_profit = async (data_arr,bi,results) =>{
             for (i=0; i<data_arr.length; i++){
 
                 result = await model.Profit.create({
-                    time:data_arr[i].date,
-                    day_profit:data_arr[i].profit,
+                    profit_date:data_arr[i].date,
+                    profit:data_arr[i].profit,
                     profitcode:data_arr[i].profitcode,
                     branch_id:bi,
                 })

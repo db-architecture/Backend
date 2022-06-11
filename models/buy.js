@@ -29,7 +29,7 @@ module.exports = class Buy extends Sequelize.Model {
           type: Sequelize.INTEGER,
           allowNull:false,
         },
-        time:{
+        buy_date:{
           type:Sequelize.DATE,
           allowNull:false,
           defaultValue:Sequelize.literal('now()'),

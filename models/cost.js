@@ -13,11 +13,11 @@ module.exports = class Cost extends Sequelize.Model {
           type: Sequelize.INTEGER,
           allowNull:false,
         },
-        cost_size:{
+        cost:{
           type: Sequelize.INTEGER,
           allowNull:false,
         },
-        time:{
+        cost_date:{
           type: Sequelize.DATE,
           allowNull:false,
         },

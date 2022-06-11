@@ -13,11 +13,11 @@ module.exports = class Profit extends Sequelize.Model {
           type: Sequelize.INTEGER,
           allowNull: false,
         },
-        time:{
+        profit_date:{
           type: Sequelize.DATE,
           allowNull:false,
         },
-        day_profit:{
+        profit:{
           type: Sequelize.INTEGER,
           allowNull:false,
         },

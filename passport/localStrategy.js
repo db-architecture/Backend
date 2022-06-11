@@ -23,7 +23,7 @@ module.exports = () => {
               const userFound = await model.User.findOne({
                   raw: true,
                   where: {user_id: id},
-                  attributes: ['user_id', 'user_name', 'user_pw', 'type', 'branch_id', 'employee_id']
+                  attributes: ['user_id', 'user_name', 'user_pw', 'user_type', 'branch_id', 'employee_id']
               });
 
               if(userFound) {

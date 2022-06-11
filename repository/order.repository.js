@@ -28,16 +28,16 @@ Order.createOrder = async (order, results) => {
                 order_cost: order.order_num * cost.first_cost,
                 stuff_id: order.stuff_id,
                 branch_id: order.branch_id,
-                time: date,
-            });
+                order_date: date,
+            },{transaction:t});
     
             await model.Cost.create({
                 costcode: 4,
-                cost_size: order.order_num * cost.first_cost,
-                time: date,
+                cost: order.order_num * cost.first_cost,
+                cost_date: date,
                 branch_id: order.branch_id,
                 type_id: createdOrder.order_id,
-            });
+            },{transaction:t});
         });
         
     } catch(err) {
@@ -55,7 +55,7 @@ Order.findAllOrder = (branch_id, results) => {
         where: {
             branch_id: branch_id,
         },
-        attributes:['order_id','order_num','order_cost','time','stuff_id','branch_id'],
+        attributes:['order_id','order_num','order_cost','order_date','stuff_id','branch_id'],
     })
     .then(result => {
         console.log("find All Orders");

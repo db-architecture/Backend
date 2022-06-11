@@ -79,7 +79,7 @@ Package.registerNewPackage = async (package, results) => {
                 package_price : package.package_price,
                 pakage_type : code.sec_code,
                 branch_id : package.branch_id
-            });
+            },{transaction:t});
             
 
             const today = new Date();
@@ -93,14 +93,22 @@ Package.registerNewPackage = async (package, results) => {
                 date:dateString,
                 profit:package.package_price,
                 profitcode:packageProfitCode,
+                cost:package.commision,
             }];
 
             await model.Profit.create({
-                time:data_arr[0].date,
-                day_profit:data_arr[0].profit,
+                profit_date:data_arr[0].date,
+                profit:data_arr[0].profit,
                 profitcode:data_arr[0].profitcode,
                 branch_id:package.branch_id,
-            });
+            },{transaction:t});
+
+            await model.Cost.create({
+                cost_date:data_arr[0].date,
+                cost:data_arr[0].cost,
+                costcode:8,
+                branch_id:package.branch_id,
+            },{transaction:t});
 
 
         });

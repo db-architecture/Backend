@@ -3,8 +3,8 @@ exports.authority_employee_check = (req, res, next) => {
       res.status(401).send({
         messege: "Unauthorized"
       });
-    } else if (req.user.type > 1) {
-        console.log(req.user.type);
+    } else if (req.user.user_type > 1) {
+        console.log(req.user.user_type);
         res.status(401).send({
             messege: "do not have permission to access this api"
         });
@@ -18,8 +18,8 @@ exports.authority_employer_check = (req, res, next) => {
       res.status(401).send({
         messege: "Unauthorized"
       });
-    } else if (req.user.type > 0) {
-        console.log(req.user.type);
+    } else if (req.user.user_type > 0) {
+        console.log(req.user.user_type);
         res.status(401).send({
             messege: "do not have permission to access this api"
         });

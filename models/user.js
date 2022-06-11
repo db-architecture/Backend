@@ -20,7 +20,7 @@ module.exports = class User extends Sequelize.Model {
           type: Sequelize.STRING,
           allowNull:false,
         },
-        type:{
+        user_type:{
           type: Sequelize.INTEGER,
           allowNull:false,
           defaultValue: 1
