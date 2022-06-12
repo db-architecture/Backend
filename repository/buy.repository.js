@@ -5,14 +5,21 @@ const {sequelize} = require('../models/connection')
 const Buy = ()=>{}
 
 Buy.findByCode_and_Date = (start,end,code,age,sex,bi,sumcode,results)=>{
-
-    let where = {
-        buy_date:{
-            [Sequelize.Op.gte]:start,
-            [Sequelize.Op.lte]:end
-        },
-        branch_id: bi,
+    let where = {branch_id:bi}
+    let buy_date = {}
+    if (!(start == null)){
+        buy_date = Object.assign(buy_date,{[Sequelize.Op.gte]:start})
     }
+
+    if (!(end == null)){
+        buy_date = Object.assign(buy_date,{[Sequelize.Op.lte]:end})
+    }
+
+    if (Object.keys(buy_date).length > 0){
+        where = Object.assign(where,{buy_date})
+    }
+
+    console.log(where)
 
     if (!(code == null)){
         where = Object.assign(where,{buycode: code})
