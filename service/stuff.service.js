@@ -44,13 +44,10 @@ exports.updateItem = (req,res) => {
           message: "Content can not be empty!"
         });
       };
+     
+     let data_arr = req.body;
    
-     let id = req.body.stuff_id;
-     let an = req.body.auto_order_num;
-     let sc = req.body.stuffcode;
-     let fp = req.body.fixed_price;
-   
-     Stuff_repo.updateItem(id,an,sc,fp,(err,data) => {
+     Stuff_repo.updateItem(data_arr,(err,data) => {
        if (err)
            res.status(500).send({
                message:

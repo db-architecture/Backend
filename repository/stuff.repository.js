@@ -62,30 +62,33 @@ Stuff.addItem = async (data_arr,results)=>{
 
 }
 
-Stuff.updateItem = async (id,autonum,sc,fp,results)=>{
+Stuff.updateItem = async (data_arr,results)=>{
+    try{
+        await sequelize.transaction(async t=>{
+            let i;
+            for (i=0; i<data_arr.length; i++){
 
-    updateitems = {}
+                updateitems = {auto_order_num:data_arr[i].auto_order_num,stuffcode:data_arr[i].stuffcode,fixed_price:data_arr[i].fixed_price}
 
-    if (!(autonum==null)){
-        updateitems = Object.assign(updateitems,{auto_order_num:autonum})
-    }
-    if (!(sc==null)){
-        updateitems = Object.assign(updateitems,{stuffcode:sc})
-    }
-    if (!(fp==null)){
-        updateitems = Object.assign(updateitems,{fixed_price:fp})
-    }
+                result = await model.Stuff.update(updateitems,{
+                    where:{
+                        stuff_id: data_arr[i].stuff_id
+                    },
+                    transaction:t})
 
-    model.Stuff.update(updateitems,{
-        where:{
-            stuff_id: id,
-        }
-    }).then(result=>{
-        results(null,"update complete")
-    }).catch(err=>{
-        console.log(err)
+                
+                if (result == null){
+                    throw "Update incomplete"
+                }
+    
+            }
+        })
+    }catch(err){
         results(err,null)
-    })
+        console.log(err)
+    }
+
+    results(null,"Update complete");
 
 }
 
