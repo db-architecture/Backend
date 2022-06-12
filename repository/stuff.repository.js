@@ -1,5 +1,6 @@
 const model = require("../models");
 const Sequelize = require("sequelize");
+const { sequelize } = require("../models");
 
 const Stuff = {}
 
@@ -32,24 +33,26 @@ Stuff.getList = async (sn,id,sc,results) =>{
 Stuff.addItem = async (data_arr,results)=>{
 
     try{
-        let i;
-        for (i=0; i<data_arr.length; i++){
+        await sequelize.transaction(async t=>{
+            let i;
+            for (i=0; i<data_arr.length; i++){
 
-            result = await model.Stuff.create({
-                stuff_name:data_arr[i].stuff_name,
-                stuffcode:data_arr[i].stuffcode,
-                first_cost:data_arr[i].first_cost,
-                fixed_price:data_arr[i].fixed_price,
-                provider:data_arr[i].provider,
-                expire_period:data_arr[i].expire_period,
-                auto_order_num:data_arr[i].auto_order_num,
-            })
-
-            if (result == null){
-                throw "Create incomplete"
+                result = await model.Stuff.create({
+                    stuff_name:data_arr[i].stuff_name,
+                    stuffcode:data_arr[i].stuffcode,
+                    first_cost:data_arr[i].first_cost,
+                    fixed_price:data_arr[i].fixed_price,
+                    provider:data_arr[i].provider,
+                    expire_period:data_arr[i].expire_period,
+                    auto_order_num:data_arr[i].auto_order_num,
+                },{transaction:t})
+    
+                if (result == null){
+                    throw "Create incomplete"
+                }
+    
             }
-
-        }
+        })
     }catch(err){
         results(err,null)
         console.log(err)

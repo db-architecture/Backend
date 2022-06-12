@@ -10,14 +10,14 @@ module.exports = class User extends Sequelize.Model {
           autoIncrement:true,
         },
         user_id : {
-            type: Sequelize.STRING,
+            type: Sequelize.STRING(50),
         },
         user_name:{
-            type: Sequelize.STRING,
+            type: Sequelize.STRING(40),
             allowNull:false,
           },
         user_pw:{
-          type: Sequelize.STRING,
+          type: Sequelize.STRING(50),
           allowNull:false,
         },
         user_type:{

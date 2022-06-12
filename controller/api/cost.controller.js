@@ -51,10 +51,9 @@ module.exports = router;
  *                  methods:
  *                      type:string
  *                example:
- *                  date: "2022-01-01"
+ *                  cost_date: "2022-01-01"
  *                  loc: 전농1동 25호점
  *                  cost: 800000
- *                  methods: 발주
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":

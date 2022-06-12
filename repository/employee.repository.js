@@ -24,22 +24,29 @@ Emp.emp_list = (bi,results)=>{
 Emp.emp_create = async (bi,en,ph,sa,id,pw,results) =>{
     try{
         await sequelize.transaction(async (t)=>{
-            result = await model.Employee.create({
-                employee_name: en,
-                employee_phone: ph,
-                salary: sa,
-                branch_id:bi,
-            },{transaction:t});
+
+            let q = {employee_name: en, branch_id:bi}
+
+            if (!(sa == null)){
+                q = Object.assign(q,{salary:sa})
+            }
+            if (!(ph == null)){
+                q = Object.assign(q,{employee_phone:ph})
+            }
+
+            result = await model.Employee.create(q,{transaction:t});
 
             if (result == null){
                 throw "Create incomplete"
             }
-    
+
             result = await model.User.create({
                 user_id: id,
                 user_name: en,
                 user_pw: pw,
-                type: 1
+                type: 1,
+                employee_id:result.employee_id,
+                branch_id:bi,
             },{transaction:t});
 
             if (result == null){
