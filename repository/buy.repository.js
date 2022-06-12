@@ -117,8 +117,6 @@ Buy.update_buy= async(data_arr,bi,results) =>{
                     }
                 }
     
-                console.log(stock_arr,temp1,temp1.stuff_id)
-    
                 temp = await model.Event.findAll({
                     raw:true,
                     where:{
@@ -126,7 +124,7 @@ Buy.update_buy= async(data_arr,bi,results) =>{
                     },
                     attributes:['eventcode','disprice'],
                 })
-    
+                console.log(temp)
                 price = await model.Stuff.findOne({
                     where:{
                         stuff_id: data_arr[iter].stuff_id,
@@ -134,8 +132,14 @@ Buy.update_buy= async(data_arr,bi,results) =>{
                 })
     
                 let p = price.fixed_price;
-    
-                let ec = temp[0].eventcode;
+                let ec;
+                if (temp.length!= 0){
+                    ec = temp[0].eventcode;
+                }
+                else{
+                    ec = 0;
+                }
+                console.log(temp,ec)
                 let n = data_arr[iter].buy_num;
     
                 if (ec == 4){
