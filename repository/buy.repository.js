@@ -7,11 +7,12 @@ const Buy = ()=>{}
 Buy.findByCode_and_Date = (start,end,code,age,sex,bi,sumcode,results)=>{
     let where = {branch_id:bi}
     let buy_date = {}
-    if (!(start == null)){
+    console.log(start,end,code,age,sex,bi,sumcode)
+    if (!(start == null||end=="")){
         buy_date = Object.assign(buy_date,{[Sequelize.Op.gte]:start})
     }
 
-    if (!(end == null)){
+    if (!(end == null||end=="")){
         buy_date = Object.assign(buy_date,{[Sequelize.Op.lte]:end})
     }
 
@@ -21,15 +22,15 @@ Buy.findByCode_and_Date = (start,end,code,age,sex,bi,sumcode,results)=>{
 
     console.log(where)
 
-    if (!(code == null)){
+    if (!(code == null||code=="")){
         where = Object.assign(where,{buycode: code})
     }
 
-    if (!(age == null)){
+    if (!(age == null||age=="")){
         where = Object.assign(where,{age: age})
     }
 
-    if (!(sex == null)){
+    if (!(sex == null||sex=="")){
         where = Object.assign(where,{sex: sex})
     }
 
