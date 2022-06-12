@@ -98,8 +98,8 @@ Buy.update_buy= async(data_arr,bi,results) =>{
                 
                 let stock_arr = [];
                 let i = 0;
-    
-                if (sumall == 0){
+                
+                if (sumall == 0 || sumall == null){
                     throw "no stocks!";
                 }
                 else{
