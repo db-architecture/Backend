@@ -27,10 +27,10 @@ Emp.emp_create = async (bi,en,ph,sa,id,pw,results) =>{
 
             let q = {employee_name: en, branch_id:bi}
 
-            if (!(sa == "")){
+            if (!(sa == ""||sa==null)){
                 q = Object.assign(q,{salary:sa})
             }
-            if (!(ph == "")){
+            if (!(ph == ""||ph==null)){
                 q = Object.assign(q,{employee_phone:ph})
             }
 

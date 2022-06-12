@@ -13,7 +13,7 @@ Cost.findByCode_and_Date = (start,end,code,bi,sumcode,results)=>{
         branch_id:bi,
     }
 
-    if (!(code==null)){
+    if (!(code==""||code==null)){
         where = Object.assign(where,{costcode: code})
     }
 
