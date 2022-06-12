@@ -56,12 +56,12 @@ Stock.addItem = async(newStock, results)=>{
         })
 
         await sequelize.transaction(async t =>{
-            result = model.Stock.create({
-                stuff_id:stuff.stuff_id,
-                stock_num:newStock.stock_num,
-                branch_id:newStock.branch_id,
-                expired_date:newStock.expired_date
-            })
+            citems = {stuff_id:stuff.stuff_id,stock_num:newStock.stock_num,branch_id:newStock.branch_id}
+            if (!(newStock.expired_date == "" || newStock.expired_date == null)){
+                citems = Object.assign(citems,{expired_date : newStock.expired_date})
+            }
+            console.log(citems)
+            result = model.Stock.create(citems)
         });
 
         if(!result){
