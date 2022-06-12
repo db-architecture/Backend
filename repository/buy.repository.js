@@ -59,7 +59,6 @@ Buy.update_buy= async(data_arr,bi,results) =>{
         await sequelize.transaction(async(t)=>{
             let iter;
             for (iter=0; iter<data_arr.length; iter++){
-    
                 temp1 = await model.Stock.findAll({
                     raw:true,
                     where:{
@@ -129,26 +128,26 @@ Buy.update_buy= async(data_arr,bi,results) =>{
     
                 let p = price.fixed_price;
     
-                let ec = temp.eventcode;
-                let n = data_arr[i].buy_num;
+                let ec = temp[0].eventcode;
+                let n = data_arr[iter].buy_num;
     
                 if (ec == 4){
                     p = temp.disprice;
                 }
     
                 if (ec == 1){
-                    n = int(n/2)+(n%2);
+                    n = parseInt(n/2)+(n%2);
                     p *= n;
                 }
                 else if (ec == 2){
-                    n = int(n/3)+(n%3);
+                    n = parseInt(n/3)+(n%3);
                     p *= n;
                 }
                 else if (ec == 3){
-                    p = (int(n/4)*temp.disprice)+((n%4)*p);
+                    p = (parseInt(n/4)*temp.disprice)+((n%4)*p);
                 }
                 else{
-                    p = (data_arr[i].buy_num*p);
+                    p = (data_arr[iter].buy_num*p);
                 }
     
                 console.log(p)
