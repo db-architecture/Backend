@@ -33,15 +33,19 @@ Event.registerNewEvent = async(event, results)=>{
                 where: {code:event_code, code_name:event.event_type},
                 attributes: ['sec_code']
             }).then(event_code_result=>{
-                model.Event.create({
-                    stuff_id:stuff_id[0].stuff_id,
-                    disprice:event.disprice,
-                    disrate:event.disrate,
+                let citems = {stuff_id:stuff_id[0].stuff_id,
                     startdate:event.startdate,
                     enddate:event.enddate,
                     eventcode:event_code_result.sec_code,
-                    stuff_name:event.stuff_name
-                }).then(result=>{
+                    stuff_name:event.stuff_name}
+                if (!(event.disrate==null || event.disrate == "")){
+                    citems = Object.assign(citems,{disrate: event.disrate})
+                }
+                if (!(event.disprice==null || event.disprice == "")){
+                    citems = Object.assign(citems,{disprice:event.disprice})
+                }
+                console.log(citems)
+                model.Event.create(citems).then(result=>{
                     console.log("register new event done")
                     results(null,event)
                 }).catch(err=>{
