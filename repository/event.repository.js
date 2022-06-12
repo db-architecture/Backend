@@ -69,88 +69,55 @@ Event.registerNewEvent = async(event, results)=>{
 }
 
 
-Event.getAllEvenetList = (event_type,stuff_name,results)=>{
+Event.getAllEvenetList = async (event_type,stuff_name,results)=>{
     //물품 이름만 있는 경우
-    if(stuff_name != null && event_type==null){
-        model.Stuff.findOne({
-            raw:true,
-            where:{stuff_name:stuff_name},
-            attributes:['stuff_id']
-        }).then(stuff=>{
-            model.Event.findAll({
+
+    let where = {};
+    
+
+    try{
+        if (!(stuff_name == null || stuff_name == "")){
+            res = await model.Stuff.findOne({
                 raw:true,
-                where:{stuff_id:stuff.stuff_id}
-            }).then(result=>{
-                results(null,result);
-            }).catch(err=>{
-                console.log("err occured while getting event list with"+stuff_name);
+                where:{stuff_name:stuff_name},
+                attributes:['stuff_id']
+            })
+
+            if (res == null){
+                console.log("there is no stuff like that");
                 results(err,null);
-            })
-        }).catch(err=>{
-            console.log("err ocuured while getting stuff_id")
-            results(err,null);
-        })
-    }
-    //행사 유형만 있는 경우
-    else if(stuff_name == null && event_type != null){
-        model.Code.findOne({
-            raw:true,
-            where:{code:event_code,code_name:event_type},
-            attributes:['sec_code']
-        }).then(event_code_result=>{
-            model.Event.findAll({
-                raw:true,
-                where:{eventcode:event_code_result.sec_code},
-            }).then(result=>{
-                results(null,result)
-            }).catch(err=>{
-                console.log("err occured while getting event list with"+event_type)
-                results(err,null)
-            })
-        }).catch(err=>{
-            console.log("err occured while getting event code with "+event_type)
-            results(err.null);
-        })
-    }
-    //둘다 있는 경우
-    else if(stuff_name != null && event_type != null){
-        model.Stuff.findOne({
-            raw:true,
-            where:{stuff_name:stuff_name},
-            attributes:['stuff_id']
-        }).then(stuff_result=>{
-            model.Code.findOne({
+            }
+            else{
+                where = Object.assign(where,{stuff_id:res.stuff_id})
+            }
+        }
+        if (!(event_type == null || event_type == "")){
+            res = await model.Code.findOne({
                 raw:true,
                 where:{code:event_code,code_name:event_type},
                 attributes:['sec_code']
-            }).then(event_code_result=>{
-                model.Event.findAll({
-                    raw:true,
-                    where:{eventcode:event_code_result.sec_code,stuff_id:stuff_result.stuff_id},
-                }).then(result=>{
-                    results(null,result)
-                }).catch(err=>{
-                    console.log("err occured while getting event list with"+event_type+"and"+stuff_name)
-                    results(err,null)
-                })
-            }).catch(err=>{
-                console.log("err occured while getting event list with"+event_type)
-                results(err,null)
             })
-        }).catch(err=>{
-            console.log("err ocuured while getting stuff_id with"+stuff_name)
-            results(err,null);
-        })
-    }
-    else{
+            if (res == null){
+                throw "there is  no event_type like that"
+            }
+            else{
+                where = Object.assign(where,{eventcode:res.sec_code})
+            }
+        }
+
         model.Event.findAll({
-            raw:true
+            raw:true,
+            where:where,
         }).then(result=>{
             results(null,result)
         }).catch(err=>{
             console.log("err occured while getting event list ")
             results(err,null)
         })
+
+    }catch(err){
+        console.log(err)
+        results(err,null)
     }
 }
 
