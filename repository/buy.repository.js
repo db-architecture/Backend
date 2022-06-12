@@ -7,7 +7,6 @@ const Buy = ()=>{}
 Buy.findByCode_and_Date = (start,end,code,age,sex,bi,sumcode,results)=>{
     let where = {branch_id:bi}
     let buy_date = {}
-    console.log(start,end,code,age,sex,bi,sumcode)
     if (!(start == null||end=="")){
         buy_date = Object.assign(buy_date,{[Sequelize.Op.gte]:start})
     }
@@ -140,7 +139,7 @@ Buy.update_buy= async(data_arr,bi,results) =>{
                 let n = data_arr[iter].buy_num;
     
                 if (ec == 4){
-                    p = temp.disprice;
+                    p = temp[0].disprice;
                 }
     
                 if (ec == 1){
@@ -152,12 +151,13 @@ Buy.update_buy= async(data_arr,bi,results) =>{
                     p *= n;
                 }
                 else if (ec == 3){
-                    p = (parseInt(n/4)*temp.disprice)+((n%4)*p);
+                    p = (4*parseInt(n/4)*temp[0].disprice)+((n%4)*p);
                 }
                 else{
                     p = (data_arr[iter].buy_num*p);
                 }
-    
+                
+                console.log("pricesssssss")
                 console.log(p)
     
                 result = await model.Buy.create({
